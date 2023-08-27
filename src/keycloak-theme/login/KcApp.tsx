@@ -23,8 +23,7 @@ import UpdateEmail from "./pages/UpdateEmail/UpdateEmail";
 import UpdateUserProfile from "./pages/UpdateUserProfile/UpdateUserProfile";
 import WebauthnAuthenticate from "./pages/WebauthnAuthenticate/WebauthnAuthenticate";
 
-const Template = lazy(() => import("./Template"));
-const DefaultTemplate = lazy(() => import("keycloakify/login/Template"));
+const Template = lazy(() => import("./pages/Template/Template"));
 
 // You can uncomment this to see the values passed by the main app before redirecting.
 //import { foo, bar } from "./valuesTransferredOverUrl";
@@ -121,7 +120,7 @@ export default function KcApp(props: { kcContext: KcContext; }) {
                         return <MyExtraPage2 {...{kcContext, i18n, Template, classes}} doUseDefaultCss={true}/>;
                     // We choose to use the default Template for the Info page and to download the theme resources.
                     case "info.ftl":
-                        return <Info {...{kcContext, i18n, classes}} Template={DefaultTemplate}
+                        return <Info {...{kcContext, i18n, classes}} Template={Template}
                                      doUseDefaultCss={true}/>;
                     default:
                         return <Fallback {...{kcContext, i18n, classes}} Template={Template} doUseDefaultCss={true}/>;

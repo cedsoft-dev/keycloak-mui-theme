@@ -5,6 +5,7 @@ import {type TemplateProps} from "keycloakify/login/TemplateProps";
 import {useGetClassName} from "keycloakify/login/lib/useGetClassName";
 import {KcContext} from "../../kcContext";
 import {I18n} from "../../i18n";
+import {Alert, Container, Grid, Paper, Typography, useMediaQuery, useTheme} from "@mui/material";
 
 export default function Template(props: TemplateProps<KcContext, I18n>) {
     const {
@@ -41,6 +42,8 @@ export default function Template(props: TemplateProps<KcContext, I18n>) {
         "htmlClassName": getClassName("kcHtmlClass"),
         "bodyClassName": undefined
     });
+    const theme = useTheme();
+    const isLargerMobile = useMediaQuery(theme.breakpoints.up('sm'));
 
     if (!isReady) {
         return null;
@@ -73,32 +76,6 @@ export default function Template(props: TemplateProps<KcContext, I18n>) {
         }
     }
 
-    return (
-        <div>
-            <div id="kc-header" className={getClassName("kcHeaderClass")}>
-                <div id="kc-header-wrapper" className={getClassName("kcHeaderWrapperClass")}>
-                    {msg("loginTitleHtml", realm.displayNameHtml)}
-                </div>
-            </div>
-
-            <div
-                className={clsx(getClassName("kcFormCardClass"), displayWide && getClassName("kcFormCardAccountClass"))}>
-                <header className={getClassName("kcFormHeaderClass")}>
-                    {renderInternationalization()}
-                    {renderStuff()}
-                </header>
-                <div id="kc-content">
-                    <div id="kc-content-wrapper">
-                        {renderMessage()}
-                        {children}
-                        {renderTryAnotherWay()}
-                        {renderDisplayInfo()}
-                    </div>
-                </div>
-            </div>
-        </div>
-    );
-
     function renderStuff() {
         if (!(auth !== undefined && auth.showUsername && !auth.showResetCredentials)) {
             if (displayRequiredFields) {
@@ -111,13 +88,13 @@ export default function Template(props: TemplateProps<KcContext, I18n>) {
                                     </span>
                         </div>
                         <div className="col-md-10">
-                            <h1 id="kc-page-title">{headerNode}</h1>
+                            <Typography variant={"h1"}>{headerNode}</Typography>
                         </div>
                     </div>
                 )
             } else {
                 return (
-                    <h1 id="kc-page-title">{headerNode}</h1>
+                    <Typography variant={"h1"}>{headerNode}</Typography>
                 )
             }
         } else {
@@ -170,22 +147,7 @@ export default function Template(props: TemplateProps<KcContext, I18n>) {
         /* App-initiated actions should not see warning messages about the need to complete the action during login. */
         if (displayMessage && message !== undefined && (message.type !== "warning" || !isAppInitiatedAction)) {
             return (
-                <div className={clsx("alert", `alert-${message.type}`)}>
-                    {message.type === "success" &&
-                        <span className={getClassName("kcFeedbackSuccessIcon")}></span>}
-                    {message.type === "warning" &&
-                        <span className={getClassName("kcFeedbackWarningIcon")}></span>}
-                    {message.type === "error" &&
-                        <span className={getClassName("kcFeedbackErrorIcon")}></span>}
-                    {message.type === "info" &&
-                        <span className={getClassName("kcFeedbackInfoIcon")}></span>}
-                    <span
-                        className="kc-feedback-text"
-                        dangerouslySetInnerHTML={{
-                            "__html": message.summary
-                        }}
-                    />
-                </div>
+                <Alert severity={message.type} children={message.summary}/>
             )
         }
     }
@@ -237,4 +199,48 @@ export default function Template(props: TemplateProps<KcContext, I18n>) {
             </div>
         )
     }
+
+    function renderContent() {
+        return <>
+            <div id="kc-header" className={getClassName("kcHeaderClass")}>
+                <div id="kc-header-wrapper" className={getClassName("kcHeaderWrapperClass")}>
+                    {msg("loginTitleHtml", realm.displayNameHtml)}
+                </div>
+            </div>
+            <Paper elevation={5}>
+                <Grid container>
+                    <Grid item md={4} xs={12} sx={{backgroundColor: theme.palette.primary.main, p: 3}}>
+                    </Grid>
+                    <Grid item md={8} xs={12} sx={{p:3}}>
+                        <Container>
+                            <div>
+                                {renderInternationalization()}
+                                {renderStuff()}
+                            </div>
+                            <div>
+                                {renderMessage()}
+                                {children}
+                                {renderTryAnotherWay()}
+                                {renderDisplayInfo()}
+                            </div>
+                        </Container>
+                    </Grid>
+
+                </Grid>
+            </Paper>
+        </>
+    }
+
+    if (isLargerMobile) {
+
+        return (
+            <Container style={{height: "100%", display: "flex", flexDirection: "column", justifyContent: "center"}}>
+                {renderContent()}
+            </Container>
+        );
+
+    }
+
+    return renderContent()
+
 }

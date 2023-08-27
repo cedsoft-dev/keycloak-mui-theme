@@ -14,7 +14,6 @@ export default function LoginOtp(props: PageProps<Extract<KcContext, { pageId: "
         doUseDefaultCss,
         classes
     });
-
     const { otpLogin, url } = kcContext;
 
     const { msg, msgStr } = i18n;
