@@ -9,29 +9,35 @@ import type {I18n} from "./i18n";
 import {assert} from "keycloakify/tools/assert";
 import React from "react";
 import {
+    Alert,
     alpha,
     AppBar,
     Box,
     CssBaseline,
     Divider,
-    Drawer, FormControl,
-    IconButton, InputLabel,
+    Drawer,
+    FormControl,
+    IconButton,
     List,
     ListItemButton,
     ListItemIcon,
-    ListItemText, MenuItem, Select,
+    ListItemText,
+    MenuItem,
+    Select,
     Toolbar,
-    Typography, useTheme
+    Typography,
+    useTheme
 } from "@mui/material";
 import {
     AccountCircle,
     Api,
     Description,
-    Devices, Language,
+    Devices,
     Logout,
     Menu,
     Password,
-    ScreenLockPortrait, SwitchAccount,
+    ScreenLockPortrait,
+    SwitchAccount,
     Undo
 } from "@mui/icons-material";
 
@@ -202,29 +208,29 @@ export default function Template(props: TemplateProps<KcContext, I18n>) {
 
                     {realm.internationalizationEnabled && (assert(locale !== undefined), true) && locale.supported.length > 1 && (
 
-                            <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
-                                <Select
-                                    labelId="demo-select-small-label"
-                                    id="demo-select-small"
-                                    value={currentLanguageTag}
-                                    sx={{
-                                        position: 'relative',
-                                        backgroundColor: alpha(theme.palette.common.white, 0.15),
-                                        '&:hover': {
-                                            backgroundColor: alpha(theme.palette.common.white, 0.25),
-                                        },
-                                        marginLeft: 0,
-                                        width: '100%',
-                                        }}
-                                    onChange={(selectedLanguageTag) => changeLocale(selectedLanguageTag.target.value)}
-                                >
-                                    {locale.supported.map(({languageTag}) => (
-                                        <MenuItem value={languageTag} key={languageTag}>
-                                            {labelBySupportedLanguageTag[languageTag]}
-                                        </MenuItem>
-                                    ))}
-                                </Select>
-                            </FormControl>
+                        <FormControl sx={{m: 1, minWidth: 120}} size="small">
+                            <Select
+                                labelId="demo-select-small-label"
+                                id="demo-select-small"
+                                value={currentLanguageTag}
+                                sx={{
+                                    position: 'relative',
+                                    backgroundColor: alpha(theme.palette.common.white, 0.15),
+                                    '&:hover': {
+                                        backgroundColor: alpha(theme.palette.common.white, 0.25),
+                                    },
+                                    marginLeft: 0,
+                                    width: '100%',
+                                }}
+                                onChange={(selectedLanguageTag) => changeLocale(selectedLanguageTag.target.value)}
+                            >
+                                {locale.supported.map(({languageTag}) => (
+                                    <MenuItem value={languageTag} key={languageTag}>
+                                        {labelBySupportedLanguageTag[languageTag]}
+                                    </MenuItem>
+                                ))}
+                            </Select>
+                        </FormControl>
                     )}
                     {referrer?.url && (
                         <IconButton href={referrer.url} size={"large"} color={"inherit"}>
@@ -278,11 +284,7 @@ export default function Template(props: TemplateProps<KcContext, I18n>) {
             >
                 <Toolbar/>
                 {message !== undefined && (
-                    <div className={clsx("alert", `alert-${message.type}`)}>
-                        {message.type === "success" && <span className="pficon pficon-ok"></span>}
-                        {message.type === "error" && <span className="pficon pficon-error-circle-o"></span>}
-                        <span className="kc-feedback-text">{message.summary}</span>
-                    </div>
+                    <Alert severity={message.type}>{message.summary}</Alert>
                 )}
                 {children}
             </Box>

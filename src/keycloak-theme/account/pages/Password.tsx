@@ -3,6 +3,7 @@ import type { PageProps } from "keycloakify/account/pages/PageProps";
 import { useGetClassName } from "keycloakify/account/lib/useGetClassName";
 import type { KcContext } from "../kcContext";
 import type { I18n } from "../i18n";
+import {Button, TextField} from "@mui/material";
 
 export default function LogoutConfirm(props: PageProps<Extract<KcContext, { pageId: "password.ftl" }>, I18n>) {
     const { kcContext, i18n, doUseDefaultCss, Template, classes } = props;
@@ -50,7 +51,7 @@ export default function LogoutConfirm(props: PageProps<Extract<KcContext, { page
                         </div>
 
                         <div className="col-sm-10 col-md-10">
-                            <input type="password" className="form-control" id="password" name="password" autoFocus autoComplete="current-password" />
+                            <TextField fullWidth label={msg("password")} type={"password"} id={"password"} name={"password"} autoFocus autoComplete={"current-password"}/>
                         </div>
                     </div>
                 )}
@@ -65,7 +66,7 @@ export default function LogoutConfirm(props: PageProps<Extract<KcContext, { page
                     </div>
 
                     <div className="col-sm-10 col-md-10">
-                        <input type="password" className="form-control" id="password-new" name="password-new" autoComplete="new-password" />
+                        <TextField fullWidth label={msg("passwordNew")} type={"password"} id={"password-new"} name={"password-new"} autoComplete={"new-password"}/>
                     </div>
                 </div>
 
@@ -77,26 +78,13 @@ export default function LogoutConfirm(props: PageProps<Extract<KcContext, { page
                     </div>
 
                     <div className="col-sm-10 col-md-10">
-                        <input type="password" className="form-control" id="password-confirm" name="password-confirm" autoComplete="new-password" />
+                        <TextField fullWidth label={msg("passwordConfirm")} type={"password"} id={"password-confirm"} name={"password-confirm"} autoComplete={"new-password"}/>
                     </div>
                 </div>
 
                 <div className="form-group">
                     <div id="kc-form-buttons" className="col-md-offset-2 col-md-10 submit">
-                        <div>
-                            <button
-                                type="submit"
-                                className={clsx(
-                                    getClassName("kcButtonClass"),
-                                    getClassName("kcButtonPrimaryClass"),
-                                    getClassName("kcButtonLargeClass")
-                                )}
-                                name="submitAction"
-                                value="Save"
-                            >
-                                {msg("doSave")}
-                            </button>
-                        </div>
+                            <Button type={"submit"} color={"secondary"} variant={"contained"} name={"submitAction"} value={"Save"}>{msg("doSave")}</Button>
                     </div>
                 </div>
             </form>
