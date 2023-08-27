@@ -1,5 +1,5 @@
 import { ComponentStory, ComponentMeta } from '@storybook/react';
-import { createPageStory } from "../createPageStory";
+import { createPageStory } from "../../createPageStory";
 
 const { PageStory } = createPageStory({
     pageId: "login.ftl"

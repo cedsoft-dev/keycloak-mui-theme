@@ -1,12 +1,12 @@
 import { ComponentStory, ComponentMeta } from '@storybook/react';
-import { createPageStory } from "../createPageStory";
+import { createPageStory } from "../../createPageStory";
 
 const { PageStory } = createPageStory({
-    pageId: "terms.ftl"
+    pageId: "update-email.ftl"
 });
 
 export default {
-    title: "login/Terms",
+    title: "login/UpdateEmail",
     component: PageStory,
 } as ComponentMeta<typeof PageStory>;
 

@@ -1,7 +1,7 @@
 //This is to show that you can create stories for pages that you haven't overloaded.
 
 import { ComponentStory, ComponentMeta } from '@storybook/react';
-import { createPageStory } from "../createPageStory";
+import { createPageStory } from "../../createPageStory";
 
 const { PageStory } = createPageStory({
     pageId: "login-reset-password.ftl"

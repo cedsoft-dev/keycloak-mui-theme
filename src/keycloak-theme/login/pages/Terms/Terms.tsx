@@ -4,11 +4,11 @@ import { Markdown } from "keycloakify/tools/Markdown";
 import type { PageProps } from "keycloakify/login/pages/PageProps";
 import { useGetClassName } from "keycloakify/login/lib/useGetClassName";
 import { evtTermMarkdown } from "keycloakify/login/lib/useDownloadTerms";
-import type { KcContext } from "../kcContext";
-import type { I18n } from "../i18n";
+import type { KcContext } from "../../kcContext";
+import type { I18n } from "../../i18n";
 import { useDownloadTerms } from "keycloakify/login";
-import tos_en_url from "../assets/tos_en.md";
-import tos_fr_url from "../assets/tos_fr.md";
+import tos_en_url from "../../assets/tos_en.md";
+import tos_fr_url from "../../assets/tos_fr.md";
 
 export default function Terms(props: PageProps<Extract<KcContext, { pageId: "terms.ftl" }>, I18n>) {
     const { kcContext, i18n, doUseDefaultCss, Template, classes } = props;
@@ -20,7 +20,7 @@ export default function Terms(props: PageProps<Extract<KcContext, { pageId: "ter
 
     const { msg, msgStr } = i18n;
 
-    // NOTE: If you aren't going to customize the layout of the page you can move this hook to 
+    // NOTE: If you aren't going to customize the layout of the page you can move this hook to
     // KcApp.tsx, see: https://docs.keycloakify.dev/terms-and-conditions
     useDownloadTerms({
         kcContext,
