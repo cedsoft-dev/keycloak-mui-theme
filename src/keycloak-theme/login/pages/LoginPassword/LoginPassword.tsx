@@ -1,23 +1,24 @@
-import { useState } from "react";
-import { clsx } from "keycloakify/tools/clsx";
-import { useConstCallback } from "keycloakify/tools/useConstCallback";
-import type { FormEventHandler } from "react";
-import type { PageProps } from "keycloakify/login/pages/PageProps";
-import { useGetClassName } from "keycloakify/login/lib/useGetClassName";
-import type { KcContext } from "../../kcContext";
-import type { I18n } from "../../i18n";
+import type {FormEventHandler} from "react";
+import {useState} from "react";
+import {clsx} from "keycloakify/tools/clsx";
+import {useConstCallback} from "keycloakify/tools/useConstCallback";
+import type {PageProps} from "keycloakify/login/pages/PageProps";
+import {useGetClassName} from "keycloakify/login/lib/useGetClassName";
+import type {KcContext} from "../../kcContext";
+import type {I18n} from "../../i18n";
+import {Button, TextField} from "@mui/material";
 
 export default function LoginPassword(props: PageProps<Extract<KcContext, { "pageId": "login-password.ftl" }>, I18n>) {
-    const { kcContext, i18n, doUseDefaultCss, Template, classes } = props;
+    const {kcContext, i18n, doUseDefaultCss, Template, classes} = props;
 
-    const { getClassName } = useGetClassName({
+    const {getClassName} = useGetClassName({
         doUseDefaultCss,
         classes
     });
 
-    const { realm, url, login } = kcContext;
+    const {realm, url, login} = kcContext;
 
-    const { msg, msgStr } = i18n;
+    const {msg, msgStr} = i18n;
 
     const [isLoginButtonDisabled, setIsLoginButtonDisabled] = useState(false);
 
@@ -32,53 +33,40 @@ export default function LoginPassword(props: PageProps<Extract<KcContext, { "pag
     });
 
     return (
-        <Template {...{ kcContext, i18n, doUseDefaultCss, classes }} headerNode={msg("doLogIn")}>
+        <Template {...{kcContext, i18n, doUseDefaultCss, classes}} headerNode={msg("doLogIn")}>
             <div id="kc-form">
                 <div id="kc-form-wrapper">
                     <form id="kc-form-login" onSubmit={onSubmit} action={url.loginAction} method="post">
                         <div className={getClassName("kcFormGroupClass")}>
-                            <hr />
-                            <label htmlFor="password" className={getClassName("kcLabelClass")}>
-                                {msg("password")}
-                            </label>
-                            <input
+                            <hr/>
+                            <TextField
                                 tabIndex={2}
                                 id="password"
-                                className={getClassName("kcInputClass")}
                                 name="password"
                                 type="password"
                                 autoFocus={true}
                                 autoComplete="on"
                                 defaultValue={login.password ?? ""}
+                                label={msg("password")}
+                                fullWidth
                             />
                         </div>
                         <div className={clsx(getClassName("kcFormGroupClass"), getClassName("kcFormSettingClass"))}>
-                            <div id="kc-form-options" />
+                            <div id="kc-form-options"/>
                             <div className={getClassName("kcFormOptionsWrapperClass")}>
                                 {realm.resetPasswordAllowed && (
-                                    <span>
-                                        <a tabIndex={5} href={url.loginResetCredentialsUrl}>
-                                            {msg("doForgotPassword")}
-                                        </a>
-                                    </span>
+                                    <Button tabIndex={5} href={url.loginResetCredentialsUrl}
+                                            fullWidth>{msg("doForgotPassword")}</Button>
                                 )}
                             </div>
                         </div>
                         <div id="kc-form-buttons" className={getClassName("kcFormGroupClass")}>
-                            <input
-                                tabIndex={4}
-                                className={clsx(
-                                    getClassName("kcButtonClass"),
-                                    getClassName("kcButtonPrimaryClass"),
-                                    getClassName("kcButtonBlockClass"),
-                                    getClassName("kcButtonLargeClass")
-                                )}
-                                name="login"
-                                id="kc-login"
-                                type="submit"
-                                value={msgStr("doLogIn")}
-                                disabled={isLoginButtonDisabled}
-                            />
+                            <Button tabIndex={4} name="login"
+                                    id="kc-login"
+                                    type="submit"
+                                    value={msgStr("doLogIn")}
+                                    disabled={isLoginButtonDisabled} fullWidth variant={"contained"} color={"secondary"}>{msgStr("doLogIn")}</Button>
+
                         </div>
                     </form>
                 </div>
