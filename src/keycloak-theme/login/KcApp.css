@@ -14,3 +14,12 @@
 .my-root-class body {
 	background: url(./assets/background.svg) no-repeat center center fixed;
 }
+
+body, html, #root{
+	height: 100%
+}
+
+body, .sb-main-padded {
+	padding: 0 !important;
+}
+

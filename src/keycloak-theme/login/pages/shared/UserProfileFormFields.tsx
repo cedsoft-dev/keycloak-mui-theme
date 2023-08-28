@@ -1,9 +1,10 @@
-import { useEffect, Fragment } from "react";
-import type { ClassKey } from "keycloakify/login/TemplateProps";
-import { clsx } from "keycloakify/tools/clsx";
-import { useFormValidation } from "keycloakify/login/lib/useFormValidation";
-import type { Attribute } from "keycloakify/login/kcContext/KcContext";
-import type { I18n } from "../../i18n";
+import {Fragment, useEffect} from "react";
+import type {ClassKey} from "keycloakify/login/TemplateProps";
+import {clsx} from "keycloakify/tools/clsx";
+import {useFormValidation} from "keycloakify/login/lib/useFormValidation";
+import type {Attribute} from "keycloakify/login/kcContext/KcContext";
+import type {I18n} from "../../i18n";
+import {MenuItem, Select, Stack, TextField} from "@mui/material";
 
 export type UserProfileFormFieldsProps = {
     kcContext: Parameters<typeof useFormValidation>[0]["kcContext"];
@@ -15,12 +16,12 @@ export type UserProfileFormFieldsProps = {
 };
 
 export function UserProfileFormFields(props: UserProfileFormFieldsProps) {
-    const { kcContext, onIsFormSubmittableValueChange, i18n, getClassName, BeforeField, AfterField } = props;
+    const {kcContext, onIsFormSubmittableValueChange, i18n, getClassName, BeforeField, AfterField} = props;
 
-    const { advancedMsg, msg } = i18n;
+    const {advancedMsg, msg} = i18n;
 
     const {
-        formValidationState: { fieldStateByAttributeName, isFormSubmittable },
+        formValidationState: {fieldStateByAttributeName, isFormSubmittable},
         formValidationDispatch,
         attributesWithPassword
     } = useFormValidation({
@@ -37,9 +38,9 @@ export function UserProfileFormFields(props: UserProfileFormFieldsProps) {
     return (
         <>
             {attributesWithPassword.map((attribute, i) => {
-                const { group = "", groupDisplayHeader = "", groupDisplayDescription = "" } = attribute;
+                const {group = "", groupDisplayHeader = "", groupDisplayDescription = ""} = attribute;
 
-                const { value, displayableErrors } = fieldStateByAttributeName[attribute.name];
+                const {value, displayableErrors} = fieldStateByAttributeName[attribute.name];
 
                 const formGroupClassName = clsx(
                     getClassName("kcFormGroupClass"),
@@ -65,22 +66,17 @@ export function UserProfileFormFields(props: UserProfileFormFieldsProps) {
                             </div>
                         )}
 
-                        {BeforeField && <BeforeField attribute={attribute} />}
+                        {BeforeField && <BeforeField attribute={attribute}/>}
 
                         <div className={formGroupClassName}>
-                            <div className={getClassName("kcLabelWrapperClass")}>
-                                <label htmlFor={attribute.name} className={getClassName("kcLabelClass")}>
-                                    {advancedMsg(attribute.displayName ?? "")}
-                                </label>
-                                {attribute.required && <>*</>}
-                            </div>
                             <div className={getClassName("kcInputWrapperClass")}>
                                 {(() => {
-                                    const { options } = attribute.validators;
+                                    const {options} = attribute.validators;
 
                                     if (options !== undefined) {
                                         return (
-                                            <select
+                                            <Select
+                                                fullWidth
                                                 id={attribute.name}
                                                 name={attribute.name}
                                                 onChange={event =>
@@ -97,23 +93,23 @@ export function UserProfileFormFields(props: UserProfileFormFieldsProps) {
                                                     })
                                                 }
                                                 value={value}
+                                                label={advancedMsg(attribute.displayName ?? "")}
+                                                required={attribute.required}
                                             >
-                                                <>
-                                                    <option value="" selected disabled hidden>
-                                                        {msg("selectAnOption")}
-                                                    </option>
-                                                    {options.options.map(option => (
-                                                        <option key={option} value={option}>
-                                                            {option}
-                                                        </option>
-                                                    ))}
-                                                </>
-                                            </select>
+                                                <MenuItem value="" selected disabled hidden>
+                                                    {msg("selectAnOption")}
+                                                </MenuItem>
+                                                {options.options.map(option => (
+                                                    <MenuItem key={option} value={option}>
+                                                        {option}
+                                                    </MenuItem>
+                                                ))}
+                                            </Select>
                                         );
                                     }
 
                                     return (
-                                        <input
+                                        <TextField
                                             type={(() => {
                                                 switch (attribute.name) {
                                                     case "password-confirm":
@@ -123,9 +119,12 @@ export function UserProfileFormFields(props: UserProfileFormFieldsProps) {
                                                         return "text";
                                                 }
                                             })()}
+                                            fullWidth
                                             id={attribute.name}
                                             name={attribute.name}
                                             value={value}
+                                            required={attribute.required}
+                                            label={advancedMsg(attribute.displayName ?? "")}
                                             onChange={event =>
                                                 formValidationDispatch({
                                                     "action": "update value",
@@ -161,14 +160,14 @@ export function UserProfileFormFields(props: UserProfileFormFieldsProps) {
                                                     }}
                                                     aria-live="polite"
                                                 >
-                                                    {displayableErrors.map(({ errorMessage }) => errorMessage)}
+                                                    {displayableErrors.map(({errorMessage}) => errorMessage)}
                                                 </span>
                                             </>
                                         );
                                     })()}
                             </div>
                         </div>
-                        {AfterField && <AfterField attribute={attribute} />}
+                        {AfterField && <AfterField attribute={attribute}/>}
                     </Fragment>
                 );
             })}

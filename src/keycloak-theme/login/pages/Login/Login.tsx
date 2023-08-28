@@ -14,6 +14,7 @@ import {
     ListItemButton,
     ListItemIcon,
     ListItemText,
+    Stack,
     TextField
 } from "@mui/material";
 import {
@@ -108,7 +109,7 @@ export default function Login(props: PageProps<Extract<KcContext, { pageId: "log
                 >
                     {realm.password && (
                         <form id="kc-form-login" onSubmit={onSubmit} action={url.loginAction} method="post">
-                            <div className={getClassName("kcFormGroupClass")}>
+                            <Stack spacing={2}>
                                 {!usernameHidden &&
                                     (() => {
                                         const label = !realm.loginWithEmailAllowed
@@ -137,8 +138,6 @@ export default function Login(props: PageProps<Extract<KcContext, { pageId: "log
                                             </>
                                         );
                                     })()}
-                            </div>
-                            <div className={getClassName("kcFormGroupClass")}>
                                 <TextField
                                     tabIndex={2}
                                     name={"password"}
@@ -147,30 +146,22 @@ export default function Login(props: PageProps<Extract<KcContext, { pageId: "log
                                     autoComplete={"off"}
                                     fullWidth
                                 />
-                            </div>
-                            <div className={clsx(getClassName("kcFormGroupClass"), getClassName("kcFormSettingClass"))}>
-                                <div id="kc-form-options">
-                                    {realm.rememberMe && !usernameHidden && (
-                                        <div className="checkbox">
-                                            <FormGroup>
-                                                <FormControlLabel
-                                                    control={<Checkbox tabIndex={3} id={"rememberMe"}
-                                                                       name={"rememberMe"}
-                                                                       defaultChecked={login.rememberMe === "on"}/>}
-                                                    label={msg("rememberMe")}/>
-                                            </FormGroup>
-                                        </div>
-                                    )}
-                                </div>
-                                <div className={getClassName("kcFormOptionsWrapperClass")}>
-                                    {realm.resetPasswordAllowed && (
-                                        <Button tabIndex={5} href={url.loginResetCredentialsUrl}>
-                                            {msg("doForgotPassword")}
-                                        </Button>
-                                    )}
-                                </div>
-                            </div>
-                            <div id="kc-form-buttons" className={getClassName("kcFormGroupClass")}>
+                                {realm.rememberMe && !usernameHidden && (
+                                    <div className="checkbox">
+                                        <FormGroup>
+                                            <FormControlLabel
+                                                control={<Checkbox tabIndex={3} id={"rememberMe"}
+                                                                   name={"rememberMe"}
+                                                                   defaultChecked={login.rememberMe === "on"}/>}
+                                                label={msg("rememberMe")}/>
+                                        </FormGroup>
+                                    </div>
+                                )}
+                                {realm.resetPasswordAllowed && (
+                                    <Button tabIndex={5} href={url.loginResetCredentialsUrl}>
+                                        {msg("doForgotPassword")}
+                                    </Button>
+                                )}
                                 <input
                                     type="hidden"
                                     id="id-hidden-input"
@@ -194,7 +185,7 @@ export default function Login(props: PageProps<Extract<KcContext, { pageId: "log
                                 >
                                     {msgStr("doLogIn")}
                                 </Button>
-                            </div>
+                            </Stack>
                         </form>
                     )}
                 </div>

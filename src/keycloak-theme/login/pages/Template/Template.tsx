@@ -5,7 +5,21 @@ import {type TemplateProps} from "keycloakify/login/TemplateProps";
 import {useGetClassName} from "keycloakify/login/lib/useGetClassName";
 import {KcContext} from "../../kcContext";
 import {I18n} from "../../i18n";
-import {Alert, Container, Grid, Paper, Typography, useMediaQuery, useTheme} from "@mui/material";
+import {
+    Alert,
+    Box,
+    Container,
+    Grid,
+    MenuItem,
+    Paper,
+    Select,
+    Stack,
+    Typography,
+    useMediaQuery,
+    useTheme
+} from "@mui/material";
+import config from "../../../../config";
+import {Language} from "@mui/icons-material";
 
 export default function Template(props: TemplateProps<KcContext, I18n>) {
     const {
@@ -34,8 +48,6 @@ export default function Template(props: TemplateProps<KcContext, I18n>) {
         "doFetchDefaultThemeResources": doUseDefaultCss,
         url,
         "stylesCommon": [
-            "node_modules/patternfly/dist/css/patternfly.min.css",
-            "node_modules/patternfly/dist/css/patternfly-additions.min.css",
             "lib/zocial/zocial.css"
         ],
         "styles": ["css/login.css"],
@@ -47,33 +59,6 @@ export default function Template(props: TemplateProps<KcContext, I18n>) {
 
     if (!isReady) {
         return null;
-    }
-
-    function renderInternationalization() {
-        if (realm.internationalizationEnabled && (assert(locale !== undefined), true) && locale.supported.length > 1) {
-            return (
-                <div id="kc-locale">
-                    <div id="kc-locale-wrapper" className={getClassName("kcLocaleWrapperClass")}>
-                        <div className="kc-dropdown" id="kc-locale-dropdown">
-                            {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
-                            <a href="#" id="kc-current-locale-link">
-                                {labelBySupportedLanguageTag[currentLanguageTag]}
-                            </a>
-                            <ul>
-                                {locale.supported.map(({languageTag}) => (
-                                    <li key={languageTag} className="kc-dropdown-item">
-                                        {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
-                                        <a href="#" onClick={() => changeLocale(languageTag)}>
-                                            {labelBySupportedLanguageTag[languageTag]}
-                                        </a>
-                                    </li>
-                                ))}
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            )
-        }
     }
 
     function renderStuff() {
@@ -88,13 +73,13 @@ export default function Template(props: TemplateProps<KcContext, I18n>) {
                                     </span>
                         </div>
                         <div className="col-md-10">
-                            <Typography variant={"h1"}>{headerNode}</Typography>
+                            <Typography variant={"h3"}>{headerNode}</Typography>
                         </div>
                     </div>
                 )
             } else {
                 return (
-                    <Typography variant={"h1"}>{headerNode}</Typography>
+                    <Typography variant={"h3"}>{headerNode}</Typography>
                 )
             }
         } else {
@@ -200,47 +185,89 @@ export default function Template(props: TemplateProps<KcContext, I18n>) {
         )
     }
 
-    function renderContent() {
-        return <>
-            <div id="kc-header" className={getClassName("kcHeaderClass")}>
-                <div id="kc-header-wrapper" className={getClassName("kcHeaderWrapperClass")}>
-                    {msg("loginTitleHtml", realm.displayNameHtml)}
+    function renderLocalization() {
+        if (realm.internationalizationEnabled && (assert(locale !== undefined), true) && locale.supported.length > 1) {
+            return (
+                <div style={{display: "flex", alignItems: "center"}}>
+                    <Language fontSize={"small"} style={{paddingRight: "1rem"}}/>
+                    <Select
+                        value={currentLanguageTag}
+                        onChange={(kcTag) => {
+                            changeLocale(kcTag.target.value)
+                            console.log(kcTag.target.value)
+                        }}
+                        label="Language"
+                        fullWidth
+                        size={"small"}
+                    >
+                        {locale.supported.map(({languageTag}) => (
+                            <MenuItem value={languageTag} key={languageTag}>
+                                {labelBySupportedLanguageTag[languageTag]}
+                            </MenuItem>
+                        ))}
+                    </Select>
                 </div>
-            </div>
+            )
+        }
+    }
+
+
+    function renderContent() {
+        return <Box>
             <Paper elevation={5}>
                 <Grid container>
-                    <Grid item md={4} xs={12} sx={{backgroundColor: theme.palette.primary.main, p: 3}}>
+                    <Grid item md={4} xs={12} sx={{
+                        backgroundColor: theme.palette.primary.main,
+                        p: 3,
+                        display: "flex",
+                        flexDirection: "column",
+                        justifyContent: "space-between"
+                    }}>
+                        <Box/>
+                        <Box sx={{
+                            display: "flex",
+                            justifyContent: "center",
+                            flexDirection: "column",
+                            alignItems: "center"
+                        }}>
+                            <img src={config.applicationIcon} style={{height: "15rem", width: "15rem"}}/>
+                            <Typography sx={{pt: 1}}>{kcContext.client.name}</Typography>
+                        </Box>
+                        {renderLocalization()}
                     </Grid>
-                    <Grid item md={8} xs={12} sx={{p:3}}>
+                    <Grid item md={8} xs={12} sx={{p: 3}}>
                         <Container>
-                            <div>
-                                {renderInternationalization()}
+                            <Stack spacing={2}>
                                 {renderStuff()}
-                            </div>
-                            <div>
                                 {renderMessage()}
                                 {children}
                                 {renderTryAnotherWay()}
                                 {renderDisplayInfo()}
-                            </div>
+                            </Stack>
                         </Container>
                     </Grid>
 
                 </Grid>
             </Paper>
-        </>
+            <Typography sx={{pt: 2, }}>{msg("loginTitleHtml", realm.displayNameHtml)}</Typography>
+
+        </Box>
     }
 
     if (isLargerMobile) {
 
         return (
-            <Container style={{height: "100%", display: "flex", flexDirection: "column", justifyContent: "center"}}>
-                {renderContent()}
-            </Container>
+            <Box sx={{backgroundColor: theme.palette.background.default, color: theme.palette.text.disabled , height: "100%"}}>
+                <Container style={{height: "100%", display: "flex", flexDirection: "column", justifyContent: "center"}}>
+                    {renderContent()}
+                </Container>
+            </Box>
         );
 
     }
 
-    return renderContent()
+    return <Box style={{backgroundColor: theme.palette.background.default, height: "100%"}}>
+        {renderContent()}
+    </Box>
 
 }

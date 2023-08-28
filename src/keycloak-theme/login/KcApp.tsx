@@ -1,5 +1,5 @@
 import "./KcApp.css";
-import {lazy, Suspense} from "react";
+import React, {lazy, Suspense} from "react";
 import Fallback, {type PageProps} from "keycloakify/login";
 import type {KcContext} from "./kcContext";
 import {useI18n} from "./i18n";
@@ -22,6 +22,9 @@ import SelectAuthenticator from "./pages/SelectAuthenticator/SelectAuthenticator
 import UpdateEmail from "./pages/UpdateEmail/UpdateEmail";
 import UpdateUserProfile from "./pages/UpdateUserProfile/UpdateUserProfile";
 import WebauthnAuthenticate from "./pages/WebauthnAuthenticate/WebauthnAuthenticate";
+import {Box, ThemeProvider, useTheme} from "@mui/material";
+import lightTheme from "../theme/lightTheme";
+import ThemeWrapper from "../theme/ThemeWrapper";
 
 const Template = lazy(() => import("./pages/Template/Template"));
 
@@ -51,6 +54,7 @@ export default function KcApp(props: { kcContext: KcContext; }) {
     const {kcContext} = props;
 
     const i18n = useI18n({kcContext});
+    const theme = useTheme();
 
     if (i18n === null) {
         //NOTE: Text resources for the current language are still being downloaded, we can't display anything yet.
@@ -66,66 +70,81 @@ export default function KcApp(props: { kcContext: KcContext; }) {
 
     return (
         <Suspense>
-            {(() => {
-                switch (kcContext.pageId) {
-                    case "error.ftl":
-                        return <Error {...{kcContext, i18n, Template, classes}} doUseDefaultCss={true}/>
-                    case "idp-review-user-profile.ftl":
-                        return <IdpReviewUserProfile {...{kcContext, i18n, Template, classes}} doUseDefaultCss={true}/>
-                    case "login.ftl":
-                        return <Login {...{kcContext, i18n, Template, classes}} doUseDefaultCss={true}/>;
-                    case "login-config-totp.ftl":
-                        return <LoginConfigTotp {...{kcContext, i18n, Template, classes}} doUseDefaultCss={true}/>;
-                    case "login-idp-link-confirm.ftl":
-                        return <LoginIdpLinkConfirm {...{kcContext, i18n, Template, classes}} doUseDefaultCss={true}/>;
-                    case "login-idp-link-email.ftl":
-                        return <LoginIdpLinkEmail {...{kcContext, i18n, Template, classes}} doUseDefaultCss={true}/>;
-                    case "login-otp.ftl":
-                        return <LoginOtp {...{kcContext, i18n, Template, classes}} doUseDefaultCss={true}/>;
-                    case "login-page-expired.ftl":
-                        return <LoginPageExpired {...{kcContext, i18n, Template, classes}} doUseDefaultCss={true}/>;
-                    case "login-password.ftl":
-                        return <LoginPassword {...{kcContext, i18n, Template, classes}} doUseDefaultCss={true}/>;
-                    case "login-reset-password.ftl":
-                        return <LoginResetPassword {...{kcContext, i18n, Template, classes}} doUseDefaultCss={true}/>;
-                    case "login-update-password.ftl":
-                        return <LoginUpdatePassword {...{kcContext, i18n, Template, classes}} doUseDefaultCss={true}/>;
-                    case "login-update-profile.ftl":
-                        return <LoginUpdateProfile {...{kcContext, i18n, Template, classes}} doUseDefaultCss={true}/>;
-                    case "login-username.ftl":
-                        return <LoginUsername {...{kcContext, i18n, Template, classes}} doUseDefaultCss={true}/>;
-                    case "login-verify-email.ftl":
-                        return <LoginVerifyEmail {...{kcContext, i18n, Template, classes}} doUseDefaultCss={true}/>;
-                    case "logout-confirm.ftl":
-                        return <LogoutConfirm {...{kcContext, i18n, Template, classes}} doUseDefaultCss={true}/>;
-                    case "register.ftl":
-                        return <Register {...{kcContext, i18n, Template, classes}} doUseDefaultCss={true}/>;
-                    case "register-user-profile.ftl":
-                        return <RegisterUserProfile {...{kcContext, i18n, Template, classes}} doUseDefaultCss={true}/>
-                    case "saml-post-form.ftl":
-                        return <SamlPostForm {...{kcContext, i18n, Template, classes}} doUseDefaultCss={true}/>;
-                    case "select-authenticator.ftl":
-                        return <SelectAuthenticator {...{kcContext, i18n, Template, classes}} doUseDefaultCss={true}/>;
-                    case "terms.ftl":
-                        return <Terms {...{kcContext, i18n, Template, classes}} doUseDefaultCss={true}/>;
-                    case "update-email.ftl":
-                        return <UpdateEmail {...{kcContext, i18n, Template, classes}} doUseDefaultCss={true}/>;
-                    case "update-user-profile.ftl":
-                        return <UpdateUserProfile {...{kcContext, i18n, Template, classes}} doUseDefaultCss={true}/>;
-                    case "webauthn-authenticate.ftl":
-                        return <WebauthnAuthenticate {...{kcContext, i18n, Template, classes}} doUseDefaultCss={true}/>;
-                    case "my-extra-page-1.ftl":
-                        return <MyExtraPage1 {...{kcContext, i18n, Template, classes}} doUseDefaultCss={true}/>;
-                    case "my-extra-page-2.ftl":
-                        return <MyExtraPage2 {...{kcContext, i18n, Template, classes}} doUseDefaultCss={true}/>;
-                    // We choose to use the default Template for the Info page and to download the theme resources.
-                    case "info.ftl":
-                        return <Info {...{kcContext, i18n, classes}} Template={Template}
-                                     doUseDefaultCss={true}/>;
-                    default:
-                        return <Fallback {...{kcContext, i18n, classes}} Template={Template} doUseDefaultCss={true}/>;
-                }
-            })()}
+            <ThemeWrapper>
+                <Box sx={{ height: "100%", width: "100%"}}>
+                {(() => {
+                    switch (kcContext.pageId) {
+                        case "error.ftl":
+                            return <Error {...{kcContext, i18n, Template, classes}} doUseDefaultCss={true}/>
+                        case "idp-review-user-profile.ftl":
+                            return <IdpReviewUserProfile {...{kcContext, i18n, Template, classes}}
+                                                         doUseDefaultCss={true}/>
+                        case "login.ftl":
+                            return <Login {...{kcContext, i18n, Template, classes}} doUseDefaultCss={true}/>;
+                        case "login-config-totp.ftl":
+                            return <LoginConfigTotp {...{kcContext, i18n, Template, classes}} doUseDefaultCss={true}/>;
+                        case "login-idp-link-confirm.ftl":
+                            return <LoginIdpLinkConfirm {...{kcContext, i18n, Template, classes}}
+                                                        doUseDefaultCss={true}/>;
+                        case "login-idp-link-email.ftl":
+                            return <LoginIdpLinkEmail {...{kcContext, i18n, Template, classes}}
+                                                      doUseDefaultCss={true}/>;
+                        case "login-otp.ftl":
+                            return <LoginOtp {...{kcContext, i18n, Template, classes}} doUseDefaultCss={true}/>;
+                        case "login-page-expired.ftl":
+                            return <LoginPageExpired {...{kcContext, i18n, Template, classes}} doUseDefaultCss={true}/>;
+                        case "login-password.ftl":
+                            return <LoginPassword {...{kcContext, i18n, Template, classes}} doUseDefaultCss={true}/>;
+                        case "login-reset-password.ftl":
+                            return <LoginResetPassword {...{kcContext, i18n, Template, classes}}
+                                                       doUseDefaultCss={true}/>;
+                        case "login-update-password.ftl":
+                            return <LoginUpdatePassword {...{kcContext, i18n, Template, classes}}
+                                                        doUseDefaultCss={true}/>;
+                        case "login-update-profile.ftl":
+                            return <LoginUpdateProfile {...{kcContext, i18n, Template, classes}}
+                                                       doUseDefaultCss={true}/>;
+                        case "login-username.ftl":
+                            return <LoginUsername {...{kcContext, i18n, Template, classes}} doUseDefaultCss={true}/>;
+                        case "login-verify-email.ftl":
+                            return <LoginVerifyEmail {...{kcContext, i18n, Template, classes}} doUseDefaultCss={true}/>;
+                        case "logout-confirm.ftl":
+                            return <LogoutConfirm {...{kcContext, i18n, Template, classes}} doUseDefaultCss={true}/>;
+                        case "register.ftl":
+                            return <Register {...{kcContext, i18n, Template, classes}} doUseDefaultCss={true}/>;
+                        case "register-user-profile.ftl":
+                            return <RegisterUserProfile {...{kcContext, i18n, Template, classes}}
+                                                        doUseDefaultCss={true}/>
+                        case "saml-post-form.ftl":
+                            return <SamlPostForm {...{kcContext, i18n, Template, classes}} doUseDefaultCss={true}/>;
+                        case "select-authenticator.ftl":
+                            return <SelectAuthenticator {...{kcContext, i18n, Template, classes}}
+                                                        doUseDefaultCss={true}/>;
+                        case "terms.ftl":
+                            return <Terms {...{kcContext, i18n, Template, classes}} doUseDefaultCss={true}/>;
+                        case "update-email.ftl":
+                            return <UpdateEmail {...{kcContext, i18n, Template, classes}} doUseDefaultCss={true}/>;
+                        case "update-user-profile.ftl":
+                            return <UpdateUserProfile {...{kcContext, i18n, Template, classes}}
+                                                      doUseDefaultCss={true}/>;
+                        case "webauthn-authenticate.ftl":
+                            return <WebauthnAuthenticate {...{kcContext, i18n, Template, classes}}
+                                                         doUseDefaultCss={true}/>;
+                        case "my-extra-page-1.ftl":
+                            return <MyExtraPage1 {...{kcContext, i18n, Template, classes}} doUseDefaultCss={true}/>;
+                        case "my-extra-page-2.ftl":
+                            return <MyExtraPage2 {...{kcContext, i18n, Template, classes}} doUseDefaultCss={true}/>;
+                        // We choose to use the default Template for the Info page and to download the theme resources.
+                        case "info.ftl":
+                            return <Info {...{kcContext, i18n, classes}} Template={Template}
+                                         doUseDefaultCss={true}/>;
+                        default:
+                            return <Fallback {...{kcContext, i18n, classes}} Template={Template}
+                                             doUseDefaultCss={true}/>;
+                    }
+                })()}
+                </Box>
+            </ThemeWrapper>
         </Suspense>
     );
 
