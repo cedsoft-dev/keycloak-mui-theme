@@ -10,6 +10,7 @@ import { is } from "tsafe/is";
 import { typeGuard } from "tsafe/typeGuard";
 import {KcContext} from "../../kcContext";
 import {I18n} from "../../i18n";
+import {Button} from "@mui/material";
 
 export default function WebauthnAuthenticate(props: PageProps<Extract<KcContext, { pageId: "webauthn-authenticate.ftl" }>, I18n>) {
     const { kcContext, i18n, doUseDefaultCss, Template, classes } = props;
@@ -194,19 +195,18 @@ export default function WebauthnAuthenticate(props: PageProps<Extract<KcContext,
                             </>
                         ))()}
                     <div id="kc-form-buttons" className={getClassName("kcFormButtonsClass")}>
-                        <input
+                        <Button
                             id="authenticateWebAuthnButton"
                             type="button"
                             onClick={webAuthnAuthenticate}
                             autoFocus={true}
                             value={msgStr("webauthn-doAuthenticate")}
-                            className={clsx(
-                                getClassName("kcButtonClass"),
-                                getClassName("kcButtonPrimaryClass"),
-                                getClassName("kcButtonBlockClass"),
-                                getClassName("kcButtonLargeClass")
-                            )}
-                        />
+                            fullWidth
+                            variant={"contained"}
+                            color={"secondary"}
+                        >
+                            {msgStr("webauthn-doAuthenticate")}
+                        </Button>
                     </div>
                 </div>
             </div>

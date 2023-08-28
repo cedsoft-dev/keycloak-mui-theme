@@ -9,6 +9,7 @@ import type { I18n } from "../../i18n";
 import { useDownloadTerms } from "keycloakify/login";
 import tos_en_url from "../../assets/tos_en.md";
 import tos_fr_url from "../../assets/tos_fr.md";
+import {Button} from "@mui/material";
 
 export default function Terms(props: PageProps<Extract<KcContext, { pageId: "terms.ftl" }>, I18n>) {
     const { kcContext, i18n, doUseDefaultCss, Template, classes } = props;
@@ -59,30 +60,12 @@ export default function Terms(props: PageProps<Extract<KcContext, { pageId: "ter
 
     return (
         <Template {...{ kcContext, i18n, doUseDefaultCss, classes }} displayMessage={false} headerNode={msg("termsTitle")}>
-            <div id="kc-terms-text">
+            <div id="kc-terms-text" style={{overflowY: "scroll", height: "50vh"}}>
                 <Markdown>{termMarkdown}</Markdown>
             </div>
             <form className="form-actions" action={url.loginAction} method="POST">
-                <input
-                    className={clsx(
-                        getClassName("kcButtonClass"),
-                        getClassName("kcButtonClass"),
-                        getClassName("kcButtonClass"),
-                        getClassName("kcButtonPrimaryClass"),
-                        getClassName("kcButtonLargeClass")
-                    )}
-                    name="accept"
-                    id="kc-accept"
-                    type="submit"
-                    value={msgStr("doAccept")}
-                />
-                <input
-                    className={clsx(getClassName("kcButtonClass"), getClassName("kcButtonDefaultClass"), getClassName("kcButtonLargeClass"))}
-                    name="cancel"
-                    id="kc-decline"
-                    type="submit"
-                    value={msgStr("doDecline")}
-                />
+                <Button color={"secondary"} variant={"contained"} value={msgStr("doAccept")} type={"submit"} id={"kc-accept"} name={"accept"}>{msgStr("doAccept")}</Button>
+                <Button value={msgStr("doDecline")} type={"submit"} id={"kc-decline"} name={"cancel"}>{msgStr("doDecline")}</Button>
             </form>
             <div className="clearfix" />
         </Template>

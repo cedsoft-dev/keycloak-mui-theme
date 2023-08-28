@@ -11,3 +11,11 @@ export default {
 } as ComponentMeta<typeof PageStory>;
 
 export const Primary: ComponentStory<typeof PageStory> = () => <PageStory />;
+
+export const WithIsAppInitiatedAction: ComponentStory<typeof PageStory> = () => (
+    <PageStory
+        kcContext={{
+            isAppInitiatedAction: true
+        }}
+    />
+);

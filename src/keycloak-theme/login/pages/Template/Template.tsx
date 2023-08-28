@@ -214,7 +214,7 @@ export default function Template(props: TemplateProps<KcContext, I18n>) {
 
     function renderContent() {
         return <Box>
-            <Paper elevation={5}>
+            <Paper elevation={5} sx={{mt: 3, mb: 3}}>
                 <Grid container>
                     <Grid item md={4} xs={12} sx={{
                         backgroundColor: theme.palette.primary.main,
