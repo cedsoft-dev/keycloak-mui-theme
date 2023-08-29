@@ -1,6 +1,5 @@
 // Copy pasted from: https://github.com/InseeFrLab/keycloakify/blob/main/src/login/Template.tsx
 
-import {clsx} from "keycloakify/tools/clsx";
 import {usePrepareTemplate} from "keycloakify/lib/usePrepareTemplate";
 import {type TemplateProps} from "keycloakify/account/TemplateProps";
 import {useGetClassName} from "keycloakify/account/lib/useGetClassName";
@@ -13,6 +12,7 @@ import {
     alpha,
     AppBar,
     Box,
+    Container,
     CssBaseline,
     Divider,
     Drawer,
@@ -57,12 +57,11 @@ export default function Template(props: TemplateProps<KcContext, I18n>) {
         setMobileOpen(!mobileOpen);
     };
     const {isReady} = usePrepareTemplate({
+        bodyClassName: undefined,
         "doFetchDefaultThemeResources": doUseDefaultCss,
         url,
-        "stylesCommon": ["node_modules/patternfly/dist/css/patternfly.min.css", "node_modules/patternfly/dist/css/patternfly-additions.min.css"],
         "styles": ["css/account.css"],
-        "htmlClassName": undefined,
-        "bodyClassName": clsx("admin-console", "user", getClassName("kcBodyClass"))
+        "htmlClassName": undefined
     });
     const drawerWidth = 240;
 
@@ -242,7 +241,7 @@ export default function Template(props: TemplateProps<KcContext, I18n>) {
                         </IconButton>
                     )}
                     <IconButton href={url.getLogoutUrl()} size={"large"} color={"inherit"}>
-                        <Logout fontSize={"large"}/>
+                        <Logout/>
                     </IconButton>
                 </Toolbar>
             </AppBar>
@@ -283,10 +282,12 @@ export default function Template(props: TemplateProps<KcContext, I18n>) {
                 sx={{flexGrow: 1, p: 3, width: {sm: `calc(100% - ${drawerWidth}px)`}}}
             >
                 <Toolbar/>
-                {message !== undefined && (
-                    <Alert severity={message.type}>{message.summary}</Alert>
-                )}
-                {children}
+                <Container>
+                    {message !== undefined && (
+                        <Alert severity={message.type}>{message.summary}</Alert>
+                    )}
+                    {children}
+                </Container>
             </Box>
         </Box>
     )

@@ -1,21 +1,23 @@
-import { clsx } from "keycloakify/tools/clsx";
-import type { PageProps } from "keycloakify/login/pages/PageProps";
-import { useGetClassName } from "keycloakify/login/lib/useGetClassName";
-import type { KcContext } from "../../kcContext";
-import type { I18n } from "../../i18n";
-import { MessageKey } from "keycloakify/login/i18n/i18n";
+import type {PageProps} from "keycloakify/login/pages/PageProps";
+import {useGetClassName} from "keycloakify/login/lib/useGetClassName";
+import type {KcContext} from "../../kcContext";
+import type {I18n} from "../../i18n";
+import {MessageKey} from "keycloakify/login/i18n/i18n";
+import {Button, Link, Stack, TextField, Typography} from "@mui/material";
 
-export default function LoginConfigTotp(props: PageProps<Extract<KcContext, { pageId: "login-config-totp.ftl" }>, I18n>) {
-    const { kcContext, i18n, doUseDefaultCss, Template, classes } = props;
+export default function LoginConfigTotp(props: PageProps<Extract<KcContext, {
+    pageId: "login-config-totp.ftl"
+}>, I18n>) {
+    const {kcContext, i18n, doUseDefaultCss, Template, classes} = props;
 
-    const { getClassName } = useGetClassName({
+    const {getClassName} = useGetClassName({
         doUseDefaultCss,
         classes
     });
 
-    const { url, isAppInitiatedAction, totp, mode, messagesPerField } = kcContext;
+    const {url, isAppInitiatedAction, totp, mode, messagesPerField} = kcContext;
 
-    const { msg, msgStr } = i18n;
+    const {msg, msgStr} = i18n;
 
     const algToKeyUriAlg: Record<(typeof kcContext)["totp"]["policy"]["algorithm"], string> = {
         "HmacSHA1": "SHA1",
@@ -24,163 +26,151 @@ export default function LoginConfigTotp(props: PageProps<Extract<KcContext, { pa
     };
 
     return (
-        <Template {...{ kcContext, i18n, doUseDefaultCss, classes }} headerNode={msg("loginTotpTitle")}>
+        <Template {...{kcContext, i18n, doUseDefaultCss, classes}} headerNode={msg("loginTotpTitle")}>
             <>
-                <ol id="kc-totp-settings">
-                    <li>
-                        <p>{msg("loginTotpStep1")}</p>
-
-                        <ul id="kc-totp-supported-apps">
-                            {totp.supportedApplications.map(app => (
-                                <li>{msgStr(app as MessageKey, app)}</li>
-                            ))}
-                        </ul>
-                    </li>
-
-                    {mode && mode == "manual" ? (
-                        <>
-                            <li>
-                                <p>{msg("loginTotpManualStep2")}</p>
-                                <p>
-                                    <span id="kc-totp-secret-key">{totp.totpSecretEncoded}</span>
-                                </p>
-                                <p>
-                                    <a href={totp.qrUrl} id="mode-barcode">
-                                        {msg("loginTotpScanBarcode")}
-                                    </a>
-                                </p>
-                            </li>
-                            <li>
-                                <p>{msg("loginTotpManualStep3")}</p>
-                                <p>
-                                    <ul>
-                                        <li id="kc-totp-type">
-                                            {msg("loginTotpType")}: {msg(`loginTotp.${totp.policy.type}`)}
-                                        </li>
-                                        <li id="kc-totp-algorithm">
-                                            {msg("loginTotpAlgorithm")}: {algToKeyUriAlg?.[totp.policy.algorithm] ?? totp.policy.algorithm}
-                                        </li>
-                                        <li id="kc-totp-digits">
-                                            {msg("loginTotpDigits")}: {totp.policy.digits}
-                                        </li>
-                                        {totp.policy.type === "totp" ? (
-                                            <li id="kc-totp-period">
-                                                {msg("loginTotpInterval")}: {totp.policy.period}
-                                            </li>
-                                        ) : (
-                                            <li id="kc-totp-counter">
-                                                {msg("loginTotpCounter")}: {totp.policy.initialCounter}
-                                            </li>
-                                        )}
-                                    </ul>
-                                </p>
-                            </li>
-                        </>
-                    ) : (
+                <Stack spacing={2}>
+                    <ol id="kc-totp-settings">
                         <li>
-                            <p>{msg("loginTotpStep2")}</p>
-                            <img id="kc-totp-secret-qr-code" src={`data:image/png;base64, ${totp.totpSecretQrCode}`} alt="Figure: Barcode" />
-                            <br />
-                            <p>
-                                <a href={totp.manualUrl} id="mode-manual">
-                                    {msg("loginTotpUnableToScan")}
-                                </a>
-                            </p>
+                            <Typography variant={"body1"}>{msg("loginTotpStep1")}</Typography>
+
+                            <ul id="kc-totp-supported-apps">
+                                {totp.supportedApplications.map(app => (
+                                    <li>{msgStr(app as MessageKey, app)}</li>
+                                ))}
+                            </ul>
                         </li>
-                    )}
-                    <li>
-                        <p>{msg("loginTotpStep3")}</p>
-                        <p>{msg("loginTotpStep3DeviceName")}</p>
-                    </li>
-                </ol>
 
-                <form action={url.loginAction} className={getClassName("kcFormClass")} id="kc-totp-settings-form" method="post">
-                    <div className={getClassName("kcFormGroupClass")}>
-                        <div className={getClassName("kcInputWrapperClass")}>
-                            <label htmlFor="totp" className={getClassName("kcLabelClass")}>
-                                {msg("authenticatorCode")}
-                            </label>{" "}
-                            <span className="required">*</span>
-                        </div>
-                        <div className={getClassName("kcInputWrapperClass")}>
-                            <input
-                                type="text"
-                                id="totp"
-                                name="totp"
-                                autoComplete="off"
-                                className={getClassName("kcInputClass")}
-                                aria-invalid={messagesPerField.existsError("totp")}
-                            />
+                        {mode && mode == "manual" ? (
+                            <>
+                                <li>
+                                    <Typography variant={"body1"}>{msg("loginTotpManualStep2")}</Typography>
+                                    <Typography variant={"body1"}>
+                                        <span id="kc-totp-secret-key">{totp.totpSecretEncoded}</span>
+                                    </Typography>
+                                    <Typography variant={"body1"}>
+                                        <Link href={totp.qrUrl} id="mode-barcode">
+                                            {msg("loginTotpScanBarcode")}
+                                        </Link>
+                                    </Typography>
+                                </li>
+                                <li>
+                                    <Typography variant={"body1"}>{msg("loginTotpManualStep3")}</Typography>
+                                    <Typography variant={"body1"}>
+                                        <ul>
+                                            <li id="kc-totp-type">
+                                                {msg("loginTotpType")}: {msg(`loginTotp.${totp.policy.type}`)}
+                                            </li>
+                                            <li id="kc-totp-algorithm">
+                                                {msg("loginTotpAlgorithm")}: {algToKeyUriAlg?.[totp.policy.algorithm] ?? totp.policy.algorithm}
+                                            </li>
+                                            <li id="kc-totp-digits">
+                                                {msg("loginTotpDigits")}: {totp.policy.digits}
+                                            </li>
+                                            {totp.policy.type === "totp" ? (
+                                                <li id="kc-totp-period">
+                                                    {msg("loginTotpInterval")}: {totp.policy.period}
+                                                </li>
+                                            ) : (
+                                                <li id="kc-totp-counter">
+                                                    {msg("loginTotpCounter")}: {totp.policy.initialCounter}
+                                                </li>
+                                            )}
+                                        </ul>
+                                    </Typography>
+                                </li>
+                            </>
+                        ) : (
+                            <li>
+                                <Typography variant={"body1"}>{msg("loginTotpStep2")}</Typography>
+                                <img id="kc-totp-secret-qr-code" src={`data:image/png;base64, ${totp.totpSecretQrCode}`}
+                                     alt="Figure: Barcode"/>
+                                <br/>
+                                <Typography variant={"body1"}>
+                                    <Link href={totp.manualUrl} id="mode-manual">
+                                        {msg("loginTotpUnableToScan")}
+                                    </Link>
+                                </Typography>
+                            </li>
+                        )}
+                        <li>
+                            <Typography variant={"body1"}>{msg("loginTotpStep3")}</Typography>
+                            <Typography variant={"body1"}>{msg("loginTotpStep3DeviceName")}</Typography>
+                        </li>
+                    </ol>
+                </Stack>
+                <form action={url.loginAction} className={getClassName("kcFormClass")} id="kc-totp-settings-form"
+                      method="post">
+                    <Stack spacing={2}>
+                        <div className={getClassName("kcFormGroupClass")}>
+                            <div className={getClassName("kcInputWrapperClass")}>
+                                <TextField
+                                    type="text"
+                                    id="totp"
+                                    name="totp"
+                                    autoComplete="off"
+                                    aria-invalid={messagesPerField.existsError("totp")}
+                                    required
+                                    label={msg("authenticatorCode")}
+                                    fullWidth
+                                />
 
-                            {messagesPerField.existsError("totp") && (
-                                <span id="input-error-otp-code" className={getClassName("kcInputErrorMessageClass")} aria-live="polite">
+                                {messagesPerField.existsError("totp") && (
+                                    <span id="input-error-otp-code" className={getClassName("kcInputErrorMessageClass")}
+                                          aria-live="polite">
                                     {messagesPerField.get("totp")}
                                 </span>
-                            )}
+                                )}
+                            </div>
+                            <input type="hidden" id="totpSecret" name="totpSecret" value={totp.totpSecret}/>
+                            {mode && <input type="hidden" id="mode" value={mode}/>}
                         </div>
-                        <input type="hidden" id="totpSecret" name="totpSecret" value={totp.totpSecret} />
-                        {mode && <input type="hidden" id="mode" value={mode} />}
-                    </div>
 
-                    <div className={getClassName("kcFormGroupClass")}>
-                        <div className={getClassName("kcInputWrapperClass")}>
-                            <label htmlFor="userLabel" className={getClassName("kcLabelClass")}>
-                                {msg("loginTotpDeviceName")}
-                            </label>{" "}
-                            {totp.otpCredentials.length >= 1 && <span className="required">*</span>}
-                        </div>
-                        <div className={getClassName("kcInputWrapperClass")}>
-                            <input
-                                type="text"
-                                id="userLabel"
-                                name="userLabel"
-                                autoComplete="off"
-                                className={getClassName("kcInputClass")}
-                                aria-invalid={messagesPerField.existsError("userLabel")}
-                            />
-                            {messagesPerField.existsError("userLabel") && (
-                                <span id="input-error-otp-label" className={getClassName("kcInputErrorMessageClass")} aria-live="polite">
+                        <div className={getClassName("kcFormGroupClass")}>
+                            <div className={getClassName("kcInputWrapperClass")}>
+                                <TextField
+                                    fullWidth
+                                    type="text"
+                                    id="userLabel"
+                                    name="userLabel"
+                                    autoComplete="off"
+                                    aria-invalid={messagesPerField.existsError("userLabel")}
+                                    label={msg("loginTotpDeviceName")}
+                                    required={totp.otpCredentials.length >= 1}
+                                />
+                                {messagesPerField.existsError("userLabel") && (
+                                    <span id="input-error-otp-label"
+                                          className={getClassName("kcInputErrorMessageClass")}
+                                          aria-live="polite">
                                     {messagesPerField.get("userLabel")}
                                 </span>
-                            )}
-                        </div>
-                    </div>
-
-                    {isAppInitiatedAction ? (
-                        <>
-                            <input
-                                type="submit"
-                                className={clsx(
-                                    getClassName("kcButtonClass"),
-                                    getClassName("kcButtonPrimaryClass"),
-                                    getClassName("kcButtonLargeClass")
                                 )}
+                            </div>
+                        </div>
+
+                        {isAppInitiatedAction ? (
+                            <>
+                                <Button color={"secondary"} variant={"contained"}
+                                        id="saveTOTPBtn"
+                                        value={msgStr("doSubmit")} type={"submit"}>{msgStr("doSubmit")}</Button>
+                                <Button
+                                    type={"submit"}
+                                    id="cancelTOTPBtn"
+                                    name="cancel-aia"
+                                    value="true">{msgStr("doCancel")}</Button>
+                            </>
+                        ) : (
+                            <Button
+                                type="submit"
                                 id="saveTOTPBtn"
                                 value={msgStr("doSubmit")}
-                            />
-                            <button
-                                type="submit"
-                                className={clsx(
-                                    getClassName("kcButtonClass"),
-                                    getClassName("kcButtonDefaultClass"),
-                                    getClassName("kcButtonLargeClass"),
-                                    getClassName("kcButtonLargeClass")
-                                )}
-                                id="cancelTOTPBtn"
-                                name="cancel-aia"
-                                value="true"
+                                variant={"contained"}
+                                color={"secondary"}
+                                fullWidth
                             >
-                                {msg("doCancel")}
-                            </button>
-                        </>
-                    ) : (
-                        <input
-                            type="submit"
-                            className={clsx(getClassName("kcButtonClass"), getClassName("kcButtonPrimaryClass"), getClassName("kcButtonLargeClass"))}
-                            id="saveTOTPBtn"
-                            value={msgStr("doSubmit")}
-                        />
-                    )}
+                                {msgStr("doSubmit")}
+                            </Button>
+                        )}
+                    </Stack>
                 </form>
             </>
         </Template>

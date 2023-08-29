@@ -1,11 +1,11 @@
-import {useEffect} from "react";
+import {useEffect, useState} from "react";
 import {headInsert} from "keycloakify/tools/headInsert";
 import {pathJoin} from "keycloakify/bin/tools/pathJoin";
 import type {PageProps} from "keycloakify/login/pages/PageProps";
 import {useGetClassName} from "keycloakify/login/lib/useGetClassName";
 import type {KcContext} from "../../kcContext";
 import type {I18n} from "../../i18n";
-import {Button, TextField} from "@mui/material";
+import {Button, Stack, TextField, ToggleButton, ToggleButtonGroup} from "@mui/material";
 
 export default function LoginOtp(props: PageProps<Extract<KcContext, { pageId: "login-otp.ftl" }>, I18n>) {
     const {kcContext, i18n, doUseDefaultCss, Template, classes} = props;
@@ -17,6 +17,8 @@ export default function LoginOtp(props: PageProps<Extract<KcContext, { pageId: "
     const {otpLogin, url} = kcContext;
 
     const {msg, msgStr} = i18n;
+
+    const [otpState, setOtpState] = useState(null)
 
     useEffect(() => {
         let isCleanedUp = false;
@@ -45,21 +47,30 @@ export default function LoginOtp(props: PageProps<Extract<KcContext, { pageId: "
     return (
         <Template {...{kcContext, i18n, doUseDefaultCss, classes}} headerNode={msg("doLogIn")}>
             <form id="kc-otp-login-form" className={getClassName("kcFormClass")} action={url.loginAction} method="post">
+                <Stack spacing={2}>
                 {otpLogin.userOtpCredentials.length > 1 && (
-                    <div className={getClassName("kcFormGroupClass")}>
-                        <div className={getClassName("kcInputWrapperClass")}>
-                            {otpLogin.userOtpCredentials.map(otpCredential => (
-                                <div key={otpCredential.id} className={getClassName("kcSelectOTPListClass")}>
-                                    <input type="hidden" value="${otpCredential.id}"/>
-                                    <div className={getClassName("kcSelectOTPListItemClass")}>
-                                        <span className={getClassName("kcAuthenticatorOtpCircleClass")}/>
-                                        <h2 className={getClassName("kcSelectOTPItemHeadingClass")}>{otpCredential.userLabel}</h2>
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
-                    </div>
+                    <ToggleButtonGroup
+                        fullWidth
+                        color="primary"
+                        value={otpState}
+                        exclusive
+                        onChange={(event, newValue) => {
+                            if (newValue === otpState) {
+                                return null;
+                            }
+                            setOtpState(newValue)
+                        }}
+                        aria-label="Platform"
+                    >
+                        {otpLogin.userOtpCredentials.map(otpCredential => (
+                            <ToggleButton key={otpCredential.id}
+                                          value={otpCredential.id}>{otpCredential.userLabel}</ToggleButton>
+                        ))}
+                    </ToggleButtonGroup>
+
                 )}
+                <input type="hidden" value={otpState ?? ""} name={"selectedCredentialId"}/>
+
                 <div className={getClassName("kcFormGroupClass")}>
                     <TextField fullWidth name={"otp"} autoComplete={"off"} type="text" autoFocus
                                label={msg("loginOtpOneTime")}/>
@@ -79,9 +90,11 @@ export default function LoginOtp(props: PageProps<Extract<KcContext, { pageId: "
                             value={msgStr("doLogIn")}
                             variant={"contained"}
                             color={"secondary"}
+                            disabled={!otpState}
                         >{msgStr("doLogIn")}</Button>
                     </div>
                 </div>
+                </Stack>
             </form>
         </Template>
     );
@@ -95,6 +108,7 @@ function evaluateInlineScript() {
         $(".card-pf-view-single-select").click(function (this: any) {
             if ($(this).hasClass("active")) {
                 $(this).removeClass("active");
+                console.log($(this).children())
                 $(this).children().removeAttr("name");
             } else {
                 $(".card-pf-view-single-select").removeClass("active");

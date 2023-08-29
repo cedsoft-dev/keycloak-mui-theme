@@ -3,12 +3,12 @@ import {lazy, Suspense} from "react";
 import type {PageProps} from "keycloakify/account";
 import type {KcContext} from "./kcContext";
 import {useI18n} from "./i18n";
-import Account from "./pages/Account";
+import Account from "./pages/Account/Account";
 import ThemeWrapper from "../theme/ThemeWrapper";
 
 const Template = lazy(() => import("./Template"));
 
-const Password = lazy(() => import("./pages/Password"));
+const Password = lazy(() => import("./pages/Password/Password"));
 const MyExtraPage1 = lazy(() => import("./pages/MyExtraPage1"));
 const MyExtraPage2 = lazy(() => import("./pages/MyExtraPage2"));
 const Fallback = lazy(() => import("keycloakify/account"));

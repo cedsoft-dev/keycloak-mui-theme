@@ -1,9 +1,9 @@
 import {clsx} from "keycloakify/tools/clsx";
 import type {PageProps} from "keycloakify/account/pages/PageProps";
 import {useGetClassName} from "keycloakify/account/lib/useGetClassName";
-import type {KcContext} from "../kcContext";
-import type {I18n} from "../i18n";
-import {Button, TextField} from "@mui/material";
+import type {KcContext} from "../../kcContext";
+import type {I18n} from "../../i18n";
+import {Button, Stack, TextField} from "@mui/material";
 
 export default function Account(props: PageProps<Extract<KcContext, { pageId: "account.ftl" }>, I18n>) {
     const {kcContext, i18n, doUseDefaultCss, Template, classes} = props;
@@ -35,16 +35,9 @@ export default function Account(props: PageProps<Extract<KcContext, { pageId: "a
 
             <form action={url.accountUrl} className="form-horizontal" method="post">
                 <input type="hidden" id="stateChecker" name="stateChecker" value={stateChecker}/>
-
+<Stack spacing={2}>
                 {!realm.registrationEmailAsUsername && (
                     <div className={clsx("form-group", messagesPerField.printIfExists("username", "has-error"))}>
-                        <div className="col-sm-2 col-md-2">
-                            <label htmlFor="username" className="control-label">
-                                {msg("username")}
-                            </label>
-                            {realm.editUsernameAllowed && <span className="required">*</span>}
-                        </div>
-
                         <div className="col-sm-10 col-md-10">
                             <TextField
                                 fullWidth
@@ -54,18 +47,13 @@ export default function Account(props: PageProps<Extract<KcContext, { pageId: "a
                                 name={"username"}
                                 disabled={!realm.editUsernameAllowed}
                                 value={account.username ?? ""}
+                                required={realm.editUsernameAllowed}
                             />
                         </div>
                     </div>
                 )}
 
                 <div className={clsx("form-group", messagesPerField.printIfExists("email", "has-error"))}>
-                    <div className="col-sm-2 col-md-2">
-                        <label htmlFor="email" className="control-label">
-                            {msg("email")}
-                        </label>{" "}
-                        <span className="required">*</span>
-                    </div>
 
                     <div className="col-sm-10 col-md-10">
                         <TextField
@@ -76,17 +64,12 @@ export default function Account(props: PageProps<Extract<KcContext, { pageId: "a
                             name={"email"}
                             autoFocus
                             value={account.email ?? ""}
+                            required
                         />
                     </div>
                 </div>
 
                 <div className={clsx("form-group", messagesPerField.printIfExists("firstName", "has-error"))}>
-                    <div className="col-sm-2 col-md-2">
-                        <label htmlFor="firstName" className="control-label">
-                            {msg("firstName")}
-                        </label>{" "}
-                        <span className="required">*</span>
-                    </div>
 
                     <div className="col-sm-10 col-md-10">
                         <TextField
@@ -96,20 +79,13 @@ export default function Account(props: PageProps<Extract<KcContext, { pageId: "a
                             id={"firstName"}
                             name={"firstName"}
                             value={account.firstName ?? ""}
+                            required
                         />
                     </div>
                 </div>
 
                 <div className={clsx("form-group", messagesPerField.printIfExists("lastName", "has-error"))}>
-                    <div className="col-sm-2 col-md-2">
-                        <label htmlFor="lastName" className="control-label">
-                            {msg("lastName")}
-                        </label>{" "}
-                        <span className="required">*</span>
-                    </div>
-
                     <div className="col-sm-10 col-md-10">
-
                         <TextField
                             fullWidth
                             label={msg("lastName")}
@@ -117,6 +93,7 @@ export default function Account(props: PageProps<Extract<KcContext, { pageId: "a
                             id={"lastName"}
                             name={"lastName"}
                             value={account.lastName ?? ""}
+                            required
                         />
                     </div>
                 </div>
@@ -134,6 +111,7 @@ export default function Account(props: PageProps<Extract<KcContext, { pageId: "a
                         </div>
                     </div>
                 </div>
+</Stack>
             </form>
         </Template>
     );
