@@ -233,7 +233,9 @@ export default function Template(props: TemplateProps<KcContext, I18n>) {
                             <img src={config.applicationIcon} style={{height: "15rem", width: "15rem"}}/>
                             <Typography sx={{pt: 1}}>{kcContext.client.name}</Typography>
                         </Box>
-                        {renderLocalization()}
+                        <Box>
+                            {renderLocalization()}
+                        </Box>
                     </Grid>
                     <Grid item md={8} xs={12} sx={{p: 3}}>
                         <Container>
@@ -246,10 +248,9 @@ export default function Template(props: TemplateProps<KcContext, I18n>) {
                             </Stack>
                         </Container>
                     </Grid>
-
                 </Grid>
             </Paper>
-            <Typography sx={{pt: 2, }}>{msg("loginTitleHtml", realm.displayNameHtml)}</Typography>
+            <Typography sx={{pt: 2,}}>{msg("loginTitleHtml", realm.displayNameHtml)}</Typography>
 
         </Box>
     }
@@ -257,7 +258,11 @@ export default function Template(props: TemplateProps<KcContext, I18n>) {
     if (isLargerMobile) {
 
         return (
-            <Box sx={{backgroundColor: theme.palette.background.default, color: theme.palette.text.disabled , height: "100%"}}>
+            <Box sx={{
+                backgroundColor: theme.palette.background.default,
+                color: theme.palette.text.disabled,
+                height: "100%"
+            }}>
                 <Container style={{height: "100%", display: "flex", flexDirection: "column", justifyContent: "center"}}>
                     {renderContent()}
                 </Container>

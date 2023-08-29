@@ -1,4 +1,3 @@
-import {green, pink} from "@mui/material/colors";
 import Logo from "./App/logo.svg"
 
 export default {

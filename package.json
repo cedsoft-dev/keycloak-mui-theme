@@ -1,11 +1,11 @@
 {
-    "name": "keycloakify-starter",
-    "homepage": "https://starter.keycloakify.dev",
-    "version": "4.6.6",
+    "name": "keycloak-mui-theme",
+    "homepage": "https://gitlab.cedsoft.de/cedsoft/auth/keycloak-mui-client",
+    "version": "0.1.0",
     "description": "A starter/demo project for keycloakify",
     "repository": {
         "type": "git",
-        "url": "git://github.com/codegouvfr/keycloakify-starter.git"
+        "url": "https://gitlab.cedsoft.de/cedsoft/auth/keycloak-mui-client.git"
     },
     "scripts": {
         "postinstall": "copy-keycloak-resources-to-public",
@@ -22,7 +22,7 @@
             "keycloakify-starter-variant-1"
         ]
     },
-    "author": "u/garronej",
+    "author": "Cedric Rische <cedric.rische@cedsoft.de> (https://www.cedsoft.de)",
     "license": "MIT",
     "keywords": [],
     "dependencies": {
