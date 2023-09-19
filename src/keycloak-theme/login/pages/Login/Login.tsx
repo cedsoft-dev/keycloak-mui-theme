@@ -8,15 +8,18 @@ import type {I18n} from "../../i18n";
 import {
     Button,
     Checkbox,
+    Divider,
     FormControlLabel,
-    FormGroup,
+    FormGroup, Grid,
     List,
     ListItemButton,
     ListItemIcon,
     ListItemText,
     Stack,
-    TextField
+    TextField,
+    Typography, useMediaQuery, useTheme
 } from "@mui/material";
+import {LoadingButton} from "@mui/lab";
 import {
     Apple,
     CheckBoxOutlineBlank,
@@ -28,6 +31,7 @@ import {
     Microsoft,
     Twitter
 } from "@mui/icons-material";
+import LoadingClickButton from "../../../components/LoadingClickButton/LoadingClickButton";
 
 export default function Login(props: PageProps<Extract<KcContext, { pageId: "login.ftl" }>, I18n>) {
     const {kcContext, i18n, doUseDefaultCss, Template, classes} = props;
@@ -42,6 +46,7 @@ export default function Login(props: PageProps<Extract<KcContext, { pageId: "log
     const {msg, msgStr} = i18n;
 
     const [isLoginButtonDisabled, setIsLoginButtonDisabled] = useState(false);
+    const [isLoggingIn, setIsLoggingIn] = useState(false);
 
     const onSubmit = useConstCallback<FormEventHandler<HTMLFormElement>>(e => {
         e.preventDefault();
@@ -56,11 +61,18 @@ export default function Login(props: PageProps<Extract<KcContext, { pageId: "log
 
         formElement.submit();
     });
+    const theme = useTheme();
+    const isLargerMobile = useMediaQuery(theme.breakpoints.up('sm'));
+
 
     function renderInfoNode() {
         if (realm.password && realm.registrationAllowed && !registrationDisabled) {
             return (
-                <Button tabIndex={6} href={url.registrationUrl}>{msg("noAccount")} {msg("doRegister")}</Button>
+                <>
+                    <Divider><Typography>{msg("or")}</Typography></Divider>
+                    <Button tabIndex={6} href={url.registrationUrl}
+                            fullWidth>{msg("noAccount")}&nbsp;{msg("doRegister")}</Button>
+                </>
             )
         }
     }
@@ -146,22 +158,29 @@ export default function Login(props: PageProps<Extract<KcContext, { pageId: "log
                                     autoComplete={"off"}
                                     fullWidth
                                 />
-                                {realm.rememberMe && !usernameHidden && (
-                                    <div className="checkbox">
-                                        <FormGroup>
-                                            <FormControlLabel
-                                                control={<Checkbox tabIndex={3} id={"rememberMe"}
-                                                                   name={"rememberMe"}
-                                                                   defaultChecked={login.rememberMe === "on"}/>}
-                                                label={msg("rememberMe")}/>
-                                        </FormGroup>
-                                    </div>
-                                )}
-                                {realm.resetPasswordAllowed && (
-                                    <Button tabIndex={5} href={url.loginResetCredentialsUrl}>
-                                        {msg("doForgotPassword")}
-                                    </Button>
-                                )}
+                                <Grid container alignItems={"center"} >
+                                    <Grid item xs={12} sm={12} md={6}>
+                                        {realm.rememberMe && !usernameHidden && (
+                                            <div className="checkbox">
+                                                <FormGroup>
+                                                    <FormControlLabel
+                                                        control={<Checkbox tabIndex={3} id={"rememberMe"}
+                                                                           name={"rememberMe"}
+                                                                           defaultChecked={login.rememberMe === "on"}/>}
+                                                        label={msg("rememberMe")}/>
+                                                </FormGroup>
+                                            </div>
+                                        )}
+                                    </Grid>
+                                    <Grid item xs={12} sm={12} md={6} style={{display: "flex", justifyContent: "flex-end"}}>
+                                        {realm.resetPasswordAllowed && (
+                                            <Button tabIndex={5} href={url.loginResetCredentialsUrl} fullWidth={!isLargerMobile}>
+                                                {msg("doForgotPassword")}
+                                            </Button>
+                                        )}
+                                    </Grid>
+                                </Grid>
+
                                 <input
                                     type="hidden"
                                     id="id-hidden-input"
@@ -172,7 +191,7 @@ export default function Login(props: PageProps<Extract<KcContext, { pageId: "log
                                         }
                                         : {})}
                                 />
-                                <Button
+                                <LoadingClickButton
                                     tabIndex={4}
                                     name={"login"}
                                     id={"kc-login"}
@@ -182,9 +201,10 @@ export default function Login(props: PageProps<Extract<KcContext, { pageId: "log
                                     fullWidth
                                     color={"secondary"}
                                     variant={"contained"}
+                                    onClick={() => alert("hi")}
                                 >
                                     {msgStr("doLogIn")}
-                                </Button>
+                                </LoadingClickButton>
                             </Stack>
                         </form>
                     )}

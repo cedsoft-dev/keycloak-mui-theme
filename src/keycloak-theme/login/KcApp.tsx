@@ -22,7 +22,7 @@ import SelectAuthenticator from "./pages/SelectAuthenticator/SelectAuthenticator
 import UpdateEmail from "./pages/UpdateEmail/UpdateEmail";
 import UpdateUserProfile from "./pages/UpdateUserProfile/UpdateUserProfile";
 import WebauthnAuthenticate from "./pages/WebauthnAuthenticate/WebauthnAuthenticate";
-import {Box, ThemeProvider, useTheme} from "@mui/material";
+import {Box, CssBaseline, ThemeProvider, useTheme} from "@mui/material";
 import lightTheme from "../theme/lightTheme";
 import ThemeWrapper from "../theme/ThemeWrapper";
 
@@ -70,6 +70,7 @@ export default function KcApp(props: { kcContext: KcContext; }) {
 
     return (
         <Suspense>
+            <CssBaseline/>
             <ThemeWrapper>
                 <Box sx={{ height: "100%", width: "100%"}}>
                 {(() => {

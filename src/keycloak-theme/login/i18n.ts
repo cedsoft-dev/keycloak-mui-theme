@@ -13,14 +13,18 @@ export const { useI18n } = createUseI18n({
         doForgotPassword: "I forgot my password",
         invalidUserMessage: "Invalid username or password.",
         backToApplication: "Back to Application",
+        or: "Or",
+        backToLogin: "Back to Login"
     },
-    fr: {
+    de: {
         /* spell-checker: disable */
-        alphanumericalCharsOnly: "Caractère alphanumérique uniquement",
-        gender: "Genre",
-        doForgotPassword: "J'ai oublié mon mot de passe",
-        invalidUserMessage: "Nom d'utilisateur ou mot de passe invalide.",
-        backToApplication: "Back to Application"
+        alphanumericalCharsOnly: "Nur Alphanumerische Zeichen",
+        gender: "Geschlecht",
+        doForgotPassword: "Ich hab mein Passwort vergessen",
+        invalidUserMessage: "Falscher Benutzername oder Passwort",
+        backToApplication: "Zurück zur App",
+        or: "Oder",
+        backToLogin: "Back to Login",
         /* spell-checker: enable */
     }
 });

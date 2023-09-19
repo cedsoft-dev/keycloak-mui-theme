@@ -4,6 +4,7 @@ import { useGetClassName } from "keycloakify/login/lib/useGetClassName";
 import type { KcContext } from "../../kcContext";
 import type { I18n } from "../../i18n";
 import {Button, Typography} from "@mui/material";
+import LoadingClickButton from "../../../components/LoadingClickButton/LoadingClickButton";
 
 export default function LogoutConfirm(props: PageProps<Extract<KcContext, { pageId: "logout-confirm.ftl" }>, I18n>) {
     const { kcContext, i18n, doUseDefaultCss, Template, classes } = props;
@@ -28,13 +29,13 @@ export default function LogoutConfirm(props: PageProps<Extract<KcContext, { page
                             <div className={getClassName("kcFormOptionsWrapperClass")}></div>
                         </div>
                         <div id="kc-form-buttons" className={getClassName("kcFormGroupClass")}>
-                            <Button tabIndex={4} name={"confirmLogout"} id={"kc-logout"} type={"submit"} value={msgStr("doLogout")} variant={"contained"} color={"secondary"} fullWidth>{msgStr("doLogout")}</Button>
+                            <LoadingClickButton tabIndex={4} name={"confirmLogout"} id={"kc-logout"} type={"submit"} value={msgStr("doLogout")} variant={"contained"} color={"secondary"} fullWidth>{msgStr("doLogout")}</LoadingClickButton>
                         </div>
                     </div>
                 </form>
                 <div id="kc-info-message">
                     {!logoutConfirm.skipLink && client.baseUrl && (
-                        <Button href={client.baseUrl} fullWidth>{msgStr("backToApplication")}</Button>
+                        <LoadingClickButton href={client.baseUrl} fullWidth>{msgStr("backToApplication")}</LoadingClickButton>
                     )}
                 </div>
             </div>

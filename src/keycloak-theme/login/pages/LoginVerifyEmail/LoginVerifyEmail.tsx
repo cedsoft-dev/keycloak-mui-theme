@@ -16,7 +16,7 @@ export default function LoginVerifyEmail(props: PageProps<Extract<KcContext, { p
             <Typography variant={"body1"}>
                 {msg("emailVerifyInstruction2")}
                 <br />
-                <Link href={url.loginAction}>{msg("doClickHere")}</Link>
+                <Link href={url.loginAction} color={"inherit"}>{msg("doClickHere")}</Link>
                 &nbsp;
                 {msg("emailVerifyInstruction3")}
             </Typography>

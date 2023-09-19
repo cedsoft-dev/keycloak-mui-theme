@@ -6,6 +6,7 @@ import {useGetClassName} from "keycloakify/login/lib/useGetClassName";
 import type {KcContext} from "../../kcContext";
 import type {I18n} from "../../i18n";
 import {Button, Stack, TextField, ToggleButton, ToggleButtonGroup} from "@mui/material";
+import LoadingClickButton from "../../../components/LoadingClickButton/LoadingClickButton";
 
 export default function LoginOtp(props: PageProps<Extract<KcContext, { pageId: "login-otp.ftl" }>, I18n>) {
     const {kcContext, i18n, doUseDefaultCss, Template, classes} = props;
@@ -82,7 +83,7 @@ export default function LoginOtp(props: PageProps<Extract<KcContext, { pageId: "
                     </div>
 
                     <div id="kc-form-buttons" className={getClassName("kcFormButtonsClass")}>
-                        <Button
+                        <LoadingClickButton
                             fullWidth
                             name="login"
                             id="kc-login"
@@ -91,7 +92,7 @@ export default function LoginOtp(props: PageProps<Extract<KcContext, { pageId: "
                             variant={"contained"}
                             color={"secondary"}
                             disabled={!otpState}
-                        >{msgStr("doLogIn")}</Button>
+                        >{msgStr("doLogIn")}</LoadingClickButton>
                     </div>
                 </div>
                 </Stack>
