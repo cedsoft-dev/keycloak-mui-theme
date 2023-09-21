@@ -1,5 +1,6 @@
 import {createTheme, darken, lighten, ThemeOptions} from "@mui/material";
 import config from "../../config";
+import getLogo from "./getLogo";
 
 const darkTheme = (theme: ThemeOptions | undefined) => createTheme({
     ...theme,
@@ -8,11 +9,15 @@ const darkTheme = (theme: ThemeOptions | undefined) => createTheme({
         mode: "dark",
         primary: {
             main: darken(config.palette.primaryColor, .2),
-            contrastText: "#f5f5f5"
+            contrastText: "#f5f5f5",
+            // @ts-ignore
+            contrastLogo: getLogo(config.palette.primaryColor),
         },
         secondary: {
             main: darken(config.palette.secondaryColor, .2),
-            contrastText: "#FBF7F5"
+            contrastText: "#FBF7F5",
+            // @ts-ignore
+            contrastLogo: getLogo(config.palette.secondaryColor),
         },
         text: {
             primary: "#FBF7F5",

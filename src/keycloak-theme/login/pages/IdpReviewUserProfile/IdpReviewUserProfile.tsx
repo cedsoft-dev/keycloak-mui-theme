@@ -33,21 +33,14 @@ export default function IdpReviewUserProfile(props: PageProps<Extract<KcContext,
                         i18n={i18n}
                         getClassName={getClassName}
                     />
-                    <div className={getClassName("kcFormGroupClass")}>
-                        <div id="kc-form-options" className={getClassName("kcFormOptionsClass")}>
-                            <div className={getClassName("kcFormOptionsWrapperClass")}/>
-                        </div>
-                        <div id="kc-form-buttons" className={getClassName("kcFormButtonsClass")}>
-                            <Button
-                                type="submit"
-                                value={msgStr("doSubmit")}
-                                disabled={!isFomSubmittable}
-                                variant={"contained"}
-                                color={"secondary"}
-                                fullWidth
-                            >{msgStr("doSubmit")}</Button>
-                        </div>
-                    </div>
+                    <Button
+                        type="submit"
+                        value={msgStr("doSubmit")}
+                        disabled={!isFomSubmittable}
+                        variant={"contained"}
+                        color={"secondary"}
+                        fullWidth
+                    >{msgStr("doSubmit")}</Button>
                 </Stack>
             </form>
         </Template>

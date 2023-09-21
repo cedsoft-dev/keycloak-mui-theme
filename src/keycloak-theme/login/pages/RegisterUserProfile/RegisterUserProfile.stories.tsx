@@ -11,3 +11,11 @@ export default {
 } as ComponentMeta<typeof PageStory>;
 
 export const Primary: ComponentStory<typeof PageStory> = () => <PageStory />;
+
+
+export const Captcha: ComponentStory<typeof PageStory> = () => <PageStory
+    kcContext={{
+        recaptchaRequired: true,
+        recaptchaSiteKey: "6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"
+    }}
+/>;

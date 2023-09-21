@@ -4,6 +4,7 @@ import type {KcContext} from "../../kcContext";
 import type {I18n} from "../../i18n";
 import {MessageKey} from "keycloakify/login/i18n/i18n";
 import {Button, Link, Stack, TextField, Typography} from "@mui/material";
+import LoadingClickButton from "../../../components/LoadingClickButton/LoadingClickButton";
 
 export default function LoginConfigTotp(props: PageProps<Extract<KcContext, {
     pageId: "login-config-totp.ftl"
@@ -149,9 +150,9 @@ export default function LoginConfigTotp(props: PageProps<Extract<KcContext, {
 
                         {isAppInitiatedAction ? (
                             <>
-                                <Button color={"secondary"} variant={"contained"}
+                                <LoadingClickButton color={"secondary"} variant={"contained"}
                                         id="saveTOTPBtn"
-                                        value={msgStr("doSubmit")} type={"submit"}>{msgStr("doSubmit")}</Button>
+                                        value={msgStr("doSubmit")} type={"submit"}>{msgStr("doSubmit")}</LoadingClickButton>
                                 <Button
                                     type={"submit"}
                                     id="cancelTOTPBtn"
@@ -159,7 +160,7 @@ export default function LoginConfigTotp(props: PageProps<Extract<KcContext, {
                                     value="true">{msgStr("doCancel")}</Button>
                             </>
                         ) : (
-                            <Button
+                            <LoadingClickButton
                                 type="submit"
                                 id="saveTOTPBtn"
                                 value={msgStr("doSubmit")}
@@ -168,7 +169,7 @@ export default function LoginConfigTotp(props: PageProps<Extract<KcContext, {
                                 fullWidth
                             >
                                 {msgStr("doSubmit")}
-                            </Button>
+                            </LoadingClickButton>
                         )}
                     </Stack>
                 </form>

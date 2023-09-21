@@ -4,6 +4,7 @@ import {useGetClassName} from "keycloakify/login/lib/useGetClassName";
 import type {KcContext} from "../../kcContext";
 import type {I18n} from "../../i18n";
 import {Button, Stack, TextField} from "@mui/material";
+import LoadingClickButton from "../../../components/LoadingClickButton/LoadingClickButton";
 
 export default function LoginUpdatePassword(props: PageProps<Extract<KcContext, {
     pageId: "login-update-password.ftl"
@@ -92,20 +93,20 @@ export default function LoginUpdatePassword(props: PageProps<Extract<KcContext, 
                         <div id="kc-form-buttons" className={getClassName("kcFormButtonsClass")}>
                             {isAppInitiatedAction ? (
                                 <>
-                                    <Button
+                                    <LoadingClickButton
                                         variant={"contained"} color={"secondary"}
                                         type="submit"
-                                        defaultValue={msgStr("doSubmit")}>{msgStr("doSubmit")}</Button>
+                                        value={msgStr("doSubmit")}>{msgStr("doSubmit")}</LoadingClickButton>
                                     <Button
                                         type="submit"
                                         name="cancel-aia"
                                         value="true">{msgStr("doCancel")}</Button>
                                 </>
                             ) : (
-                                <Button
+                                <LoadingClickButton
                                     variant={"contained"} color={"secondary"}
                                     type="submit"
-                                    value={msgStr("doSubmit")} fullWidth>{msgStr("doSubmit")}</Button>
+                                    value={msgStr("doSubmit")} fullWidth>{msgStr("doSubmit")}</LoadingClickButton>
                             )}
                         </div>
                     </div>

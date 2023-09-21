@@ -2,6 +2,9 @@ import type { PageProps } from "keycloakify/login/pages/PageProps";
 import type { KcContext } from "../../kcContext";
 import type { I18n } from "../../i18n";
 import {Link, Typography} from "@mui/material";
+import LoadingClickButton from "../../../components/LoadingClickButton/LoadingClickButton";
+import {Simulate} from "react-dom/test-utils";
+import submit = Simulate.submit;
 
 export default function Error(props: PageProps<Extract<KcContext, { pageId: "error.ftl" }>, I18n>) {
     const { kcContext, i18n, doUseDefaultCss, Template, classes } = props;
@@ -12,16 +15,10 @@ export default function Error(props: PageProps<Extract<KcContext, { pageId: "err
 
     return (
         <Template {...{ kcContext, i18n, doUseDefaultCss, classes }} displayMessage={false} headerNode={msg("errorTitle")}>
-            <div id="kc-error-message">
                 <Typography variant={"body1"}>{message.summary}</Typography>
                 {client !== undefined && client.baseUrl !== undefined && (
-                    <Typography variant={"body1"}>
-                        <Link id="backToApplication" href={client.baseUrl}>
-                            {msg("backToApplication")}
-                        </Link>
-                    </Typography>
+                    <LoadingClickButton variant={"contained"} href={client.baseUrl} fullWidth color={"secondary"}>{msg("backToApplication")}</LoadingClickButton>
                 )}
-            </div>
         </Template>
     );
 }

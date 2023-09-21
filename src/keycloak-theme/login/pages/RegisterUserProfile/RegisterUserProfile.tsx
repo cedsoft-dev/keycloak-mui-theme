@@ -6,6 +6,7 @@ import {useGetClassName} from "keycloakify/login/lib/useGetClassName";
 import type {KcContext} from "../../kcContext";
 import type {I18n} from "../../i18n";
 import {Button, Stack} from "@mui/material";
+import LoadingClickButton from "../../../components/LoadingClickButton/LoadingClickButton";
 
 export default function RegisterUserProfile(props: PageProps<Extract<KcContext, {
     pageId: "register-user-profile.ftl"
@@ -47,10 +48,10 @@ export default function RegisterUserProfile(props: PageProps<Extract<KcContext, 
                     </div>
                 )}
                 <div className={getClassName("kcFormGroupClass")} style={{"marginBottom": 30}}>
-                    <Button href={url.loginUrl} fullWidth>{msg("backToLogin")}</Button>
+                    <LoadingClickButton href={url.loginUrl} fullWidth>{msg("backToLogin")}</LoadingClickButton>
 
-                    <Button type={"submit"} value={msgStr("doRegister")} fullWidth disabled={!isFormSubmittable}
-                            variant={"contained"} color={"secondary"}>{msgStr("doRegister")}</Button>
+                    <LoadingClickButton type={"submit"} value={msgStr("doRegister")} fullWidth disabled={!isFormSubmittable}
+                            variant={"contained"} color={"secondary"}>{msgStr("doRegister")}</LoadingClickButton>
                 </div>
                 </Stack>
             </form>

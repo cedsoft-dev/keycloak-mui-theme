@@ -14,7 +14,8 @@ export const { useI18n } = createUseI18n({
         invalidUserMessage: "Invalid username or password.",
         backToApplication: "Back to Application",
         or: "Or",
-        backToLogin: "Back to Login"
+        backToLogin: "Back to Login",
+        continueTo: "Continue to"
     },
     de: {
         /* spell-checker: disable */
@@ -25,6 +26,8 @@ export const { useI18n } = createUseI18n({
         backToApplication: "Zurück zur App",
         or: "Oder",
         backToLogin: "Back to Login",
+        continueTo: "Weiter zu"
+
         /* spell-checker: enable */
     }
 });

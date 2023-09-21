@@ -201,7 +201,6 @@ export default function Login(props: PageProps<Extract<KcContext, { pageId: "log
                                     fullWidth
                                     color={"secondary"}
                                     variant={"contained"}
-                                    onClick={() => alert("hi")}
                                 >
                                     {msgStr("doLogIn")}
                                 </LoadingClickButton>

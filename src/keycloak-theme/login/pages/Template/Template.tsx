@@ -128,6 +128,13 @@ export default function Template(props: TemplateProps<KcContext, I18n>) {
         }
     }
 
+    function renderClientName() {
+        if (kcContext?.client?.name) {
+            return kcContext?.client.name
+        }
+        return kcContext?.client.clientId;
+    }
+
     function renderMessage() {
         /* App-initiated actions should not see warning messages about the need to complete the action during login. */
         if (displayMessage && message !== undefined && (message.type !== "warning" || !isAppInitiatedAction)) {
@@ -189,12 +196,11 @@ export default function Template(props: TemplateProps<KcContext, I18n>) {
         if (realm.internationalizationEnabled && (assert(locale !== undefined), true) && locale.supported.length > 1) {
             return (
                 <div style={{display: "flex", alignItems: "center"}}>
-                    <Language fontSize={"small"} style={{paddingRight: "1rem"}}/>
+                    <Language fontSize={"large"} style={{paddingRight: "1rem", color: theme.palette.primary.contrastText}}/>
                     <Select
                         value={currentLanguageTag}
                         onChange={(kcTag) => {
                             changeLocale(kcTag.target.value)
-                            console.log(kcTag.target.value)
                         }}
                         label="Language"
                         fullWidth
@@ -230,8 +236,9 @@ export default function Template(props: TemplateProps<KcContext, I18n>) {
                             flexDirection: "column",
                             alignItems: "center"
                         }}>
-                            <img src={config.applicationIcon} style={{height: "15rem", width: "15rem"}}/>
-                            <Typography sx={{pt: 1}}>{kcContext.client.name}</Typography>
+                                {/* @ts-ignore */ }
+                                <img src={theme.palette.primary.contrastLogo} style={{height: "auto", width: "15rem"}}/>
+                                <Typography sx={{pt: 3, pb: 4, color: "primary.contrastText"}}>{msg("continueTo")} {renderClientName()}</Typography>
                         </Box>
                         <Box>
                             {renderLocalization()}
@@ -250,7 +257,7 @@ export default function Template(props: TemplateProps<KcContext, I18n>) {
                     </Grid>
                 </Grid>
             </Paper>
-            <Typography sx={{pt: 2,}}>{msg("loginTitleHtml", realm.displayNameHtml)}</Typography>
+            <Typography sx={{pt: 2}}>{msg("loginTitleHtml", realm.displayNameHtml)}</Typography>
 
         </Box>
     }

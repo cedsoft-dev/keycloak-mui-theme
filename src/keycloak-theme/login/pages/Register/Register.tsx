@@ -45,11 +45,7 @@ export default function Register(props: PageProps<Extract<KcContext, { pageId: "
                         </>
                     )}
                     {recaptchaRequired && (
-                        <div className="form-group">
-                            <div className={getClassName("kcInputWrapperClass")}>
-                                <div className="g-recaptcha" data-size="compact" data-sitekey={recaptchaSiteKey}></div>
-                            </div>
-                        </div>
+                        <div className="g-recaptcha" data-size="compact" data-sitekey={recaptchaSiteKey}></div>
                     )}
                     <div className={getClassName("kcFormGroupClass")}>
                         <Button href={url.loginUrl} fullWidth>{msg("backToLogin")}</Button>

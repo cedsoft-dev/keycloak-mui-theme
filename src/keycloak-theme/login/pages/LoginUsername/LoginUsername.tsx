@@ -6,7 +6,8 @@ import type {PageProps} from "keycloakify/login/pages/PageProps";
 import {useGetClassName} from "keycloakify/login/lib/useGetClassName";
 import type {KcContext} from "../../kcContext";
 import type {I18n} from "../../i18n";
-import {Button, Checkbox, FormControlLabel, FormGroup, Link, Stack, TextField, Typography} from "@mui/material";
+import {Checkbox, Divider, FormControlLabel, FormGroup, Stack, TextField} from "@mui/material";
+import LoadingClickButton from "../../../components/LoadingClickButton/LoadingClickButton";
 
 export default function LoginUsername(props: PageProps<Extract<KcContext, { pageId: "login-username.ftl" }>, I18n>) {
     const {kcContext, i18n, doUseDefaultCss, Template, classes} = props;
@@ -46,14 +47,11 @@ export default function LoginUsername(props: PageProps<Extract<KcContext, { page
                 realm.password &&
                 realm.registrationAllowed &&
                 !registrationDisabled && (
-                    <Typography id="kc-registration">
-                        <span>
-                            {msg("noAccount")}
-                            <Link tabIndex={6} href={url.registrationUrl}>
-                                {msg("doRegister")}
-                            </Link>
-                        </span>
-                    </Typography>
+                    <>
+                        <Divider>{msg("or")}</Divider>
+                        <LoadingClickButton fullWidth tabIndex={6}
+                                            href={url.registrationUrl}>{msg("doRegister")}</LoadingClickButton>
+                    </>
                 )
             }
         >
@@ -69,60 +67,50 @@ export default function LoginUsername(props: PageProps<Extract<KcContext, { page
                     {realm.password && (
                         <form id="kc-form-login" onSubmit={onSubmit} action={url.loginAction} method="post">
                             <Stack spacing={2}>
-                                <div className={getClassName("kcFormGroupClass")}>
-                                    {!usernameHidden &&
-                                        (() => {
-                                            const label = !realm.loginWithEmailAllowed
-                                                ? "username"
-                                                : realm.registrationEmailAsUsername
-                                                    ? "email"
-                                                    : "usernameOrEmail";
+                                {!usernameHidden &&
+                                    (() => {
+                                        const label = !realm.loginWithEmailAllowed
+                                            ? "username"
+                                            : realm.registrationEmailAsUsername
+                                                ? "email"
+                                                : "usernameOrEmail";
 
-                                            const autoCompleteHelper: typeof label = label === "usernameOrEmail" ? "username" : label;
+                                        const autoCompleteHelper: typeof label = label === "usernameOrEmail" ? "username" : label;
 
-                                            return (
-                                                <>
-                                                    <TextField
-                                                        tabIndex={1}
-                                                        id={autoCompleteHelper}
-                                                        className={getClassName("kcInputClass")}
-                                                        //NOTE: This is used by Google Chrome auto fill so we use it to tell
-                                                        //the browser how to pre fill the form but before submit we put it back
-                                                        //to username because it is what keycloak expects.
-                                                        name={autoCompleteHelper}
-                                                        defaultValue={login.username ?? ""}
-                                                        type="text"
-                                                        autoFocus={true}
-                                                        autoComplete="off"
-                                                        label={msg(label)}
-                                                        fullWidth
-                                                    />
-                                                </>
-                                            );
-                                        })()}
-                                </div>
-                                <div
-                                    className={clsx(getClassName("kcFormGroupClass"), getClassName("kcFormSettingClass"))}>
-                                    <div id="kc-form-options">
-                                        {realm.rememberMe && !usernameHidden && (
-                                            <div className="checkbox">
-                                                <FormGroup>
-                                                    <FormControlLabel
-                                                        control={<Checkbox tabIndex={3} id={"rememberMe"}
-                                                                           name={"rememberMe"}
-                                                                           defaultChecked={login.rememberMe === "on"}/>}
-                                                        label={msg("rememberMe")}/>
-                                                </FormGroup>
-                                            </div>
-                                        )}
-                                    </div>
-                                </div>
-                                <div id="kc-form-buttons" className={getClassName("kcFormGroupClass")}>
-                                    <Button fullWidth tabIndex={4} name={"login"} id={"kc-login"} type={"submit"}
-                                            value={msgStr("doLogIn")}
-                                            disabled={isLoginButtonDisabled} variant={"contained"}
-                                            color={"secondary"}>{msgStr("doLogIn")}</Button>
-                                </div>
+                                        return (
+                                            <>
+                                                <TextField
+                                                    tabIndex={1}
+                                                    id={autoCompleteHelper}
+                                                    className={getClassName("kcInputClass")}
+                                                    //NOTE: This is used by Google Chrome auto fill so we use it to tell
+                                                    //the browser how to pre fill the form but before submit we put it back
+                                                    //to username because it is what keycloak expects.
+                                                    name={autoCompleteHelper}
+                                                    defaultValue={login.username ?? ""}
+                                                    type="text"
+                                                    autoFocus={true}
+                                                    autoComplete="off"
+                                                    label={msg(label)}
+                                                    fullWidth
+                                                />
+                                            </>
+                                        );
+                                    })()}
+                                {realm.rememberMe && !usernameHidden && (
+                                    <FormGroup>
+                                        <FormControlLabel
+                                            control={<Checkbox tabIndex={3} id={"rememberMe"}
+                                                               name={"rememberMe"}
+                                                               defaultChecked={login.rememberMe === "on"}/>}
+                                            label={msg("rememberMe")}/>
+                                    </FormGroup>
+                                )}
+                                <LoadingClickButton fullWidth tabIndex={4} name={"login"} id={"kc-login"}
+                                                    type={"sub  mit"}
+                                                    value={msgStr("doLogIn")}
+                                                    disabled={isLoginButtonDisabled} variant={"contained"}
+                                                    color={"secondary"}>{msgStr("doLogIn")}</LoadingClickButton>
                             </Stack>
                         </form>
                     )}
