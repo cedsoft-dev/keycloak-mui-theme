@@ -74,33 +74,4 @@ docker-build-test:
   script:
     - docker build -t $CI_REGISTRY_IMAGE/keycloak:test-build .
 
-#deploy_development:
-#  stage: deploy
-#  dependencies:
-#    - docker-build-branches
-#  script:
-#    - echo "Deploy to staging"
-#    - echo "$CI_REGISTRY_PASSWORD" | docker login $CI_REGISTRY --username $CI_REGISTRY_USER
-#      --password-stdin
-#    - docker-compose down && docker-compose pull && docker-compose up -d
-#  environment:
-#    name: development
-#    url: https://accounts.cedsoft.cedsoft.de
-#    on_stop: stop_development
-#  tags:
-#    - deploy
-#    - csdserver
-#  only:
-#    - develop
-#  except:
-#    - tags
-
-#stop_development:
-#  stage: deploy
-#  script:
-#    - docker-compose down
-#  when: manual
-#  environment:
-#    name: development
-#    action: stop
 
