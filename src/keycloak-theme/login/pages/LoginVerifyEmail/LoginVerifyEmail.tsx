@@ -1,6 +1,6 @@
-import type { PageProps } from "keycloakify/login/pages/PageProps";
-import type { KcContext } from "../../kcContext";
-import type { I18n } from "../../i18n";
+import type {PageProps} from "keycloakify/login/pages/PageProps";
+import type {KcContext} from "../../kcContext";
+import type {I18n} from "../../i18n";
 import {Link, Typography} from "@mui/material";
 
 export default function LoginVerifyEmail(props: PageProps<Extract<KcContext, { pageId: "login-verify-email.ftl" }>, I18n>) {

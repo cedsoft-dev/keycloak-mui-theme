@@ -5,7 +5,7 @@ import type {PageProps} from "keycloakify/login/pages/PageProps";
 import {useGetClassName} from "keycloakify/login/lib/useGetClassName";
 import type {KcContext} from "../../kcContext";
 import type {I18n} from "../../i18n";
-import {Button, Stack} from "@mui/material";
+import {Stack} from "@mui/material";
 import LoadingClickButton from "../../../components/LoadingClickButton/LoadingClickButton";
 
 export default function RegisterUserProfile(props: PageProps<Extract<KcContext, {

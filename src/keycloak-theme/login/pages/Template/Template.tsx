@@ -18,7 +18,6 @@ import {
     useMediaQuery,
     useTheme
 } from "@mui/material";
-import config from "../../../../config";
 import {Language} from "@mui/icons-material";
 
 export default function Template(props: TemplateProps<KcContext, I18n>) {

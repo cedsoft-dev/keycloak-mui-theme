@@ -8,14 +8,6 @@ import {Button, Stack, TextField} from "@mui/material";
 export default function LogoutConfirm(props: PageProps<Extract<KcContext, { pageId: "password.ftl" }>, I18n>) {
     const {kcContext, i18n, doUseDefaultCss, Template, classes} = props;
 
-    const {getClassName} = useGetClassName({
-        doUseDefaultCss,
-        "classes": {
-            ...classes,
-            "kcBodyClass": clsx(classes?.kcBodyClass, "password")
-        }
-    });
-
     const {url, password, account, stateChecker} = kcContext;
 
     const {msg} = i18n;

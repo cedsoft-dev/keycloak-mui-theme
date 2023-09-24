@@ -2,7 +2,7 @@ import {assert} from "keycloakify/tools/assert";
 import type {PageProps} from "keycloakify/login/pages/PageProps";
 import type {KcContext} from "../../kcContext";
 import type {I18n} from "../../i18n";
-import {Button, Typography} from "@mui/material";
+import {Typography} from "@mui/material";
 import LoadingClickButton from "../../../components/LoadingClickButton/LoadingClickButton";
 
 export default function Info(props: PageProps<Extract<KcContext, { pageId: "info.ftl" }>, I18n>) {

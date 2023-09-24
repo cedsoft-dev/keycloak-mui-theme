@@ -4,7 +4,7 @@ import {clsx} from "keycloakify/tools/clsx";
 import {useFormValidation} from "keycloakify/login/lib/useFormValidation";
 import type {Attribute} from "keycloakify/login/kcContext/KcContext";
 import type {I18n} from "../../i18n";
-import {MenuItem, Select, Stack, TextField} from "@mui/material";
+import {MenuItem, Select, TextField} from "@mui/material";
 
 export type UserProfileFormFieldsProps = {
     kcContext: Parameters<typeof useFormValidation>[0]["kcContext"];

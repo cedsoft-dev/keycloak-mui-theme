@@ -1,6 +1,6 @@
-import type { KcContext } from "keycloakify/login/kcContext";
-import type { PageProps } from "keycloakify/login/pages/PageProps";
-import type { I18n } from "keycloakify/login/i18n";
+import type {KcContext} from "keycloakify/login/kcContext";
+import type {PageProps} from "keycloakify/login/pages/PageProps";
+import type {I18n} from "keycloakify/login/i18n";
 import {Link, Typography} from "@mui/material";
 
 export default function LoginIdpLinkEmail(props: PageProps<Extract<KcContext, { pageId: "login-idp-link-email.ftl" }>, I18n>) {

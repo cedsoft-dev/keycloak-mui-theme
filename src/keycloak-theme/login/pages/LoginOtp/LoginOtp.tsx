@@ -5,7 +5,7 @@ import type {PageProps} from "keycloakify/login/pages/PageProps";
 import {useGetClassName} from "keycloakify/login/lib/useGetClassName";
 import type {KcContext} from "../../kcContext";
 import type {I18n} from "../../i18n";
-import {Button, Stack, TextField, ToggleButton, ToggleButtonGroup} from "@mui/material";
+import {Stack, TextField, ToggleButton, ToggleButtonGroup} from "@mui/material";
 import LoadingClickButton from "../../../components/LoadingClickButton/LoadingClickButton";
 
 export default function LoginOtp(props: PageProps<Extract<KcContext, { pageId: "login-otp.ftl" }>, I18n>) {
