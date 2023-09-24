@@ -9,7 +9,7 @@ ENV KC_DB=mariadb
 # Copy theme
 RUN ls -al /opt/keycloak/providers
 # Install custom providers
-COPY enroll-theme/build_keycloak/target/enroll-theme-*.jar /opt/keycloak/providers/enroll-theme.jar
+COPY enroll-theme/build_keycloak/target/keycloakify-starter-keycloak-theme-*.jar /opt/keycloak/providers/keycloak-mui-theme.jar
 RUN ls -al /opt/keycloak/providers
 
 WORKDIR /opt/keycloak
