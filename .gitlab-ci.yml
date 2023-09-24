@@ -20,7 +20,7 @@ keycloak-login-theme:
   artifacts:
     paths:
       - ./build_keycloak/src/main/resources/theme/
-      - ./build_keycloak/target/keycloak-mui-theme-*.jar
+      - ./build_keycloak/target/keycloakify-starter-keycloak-theme-*.jar
 
 docker-package:
   stage: build
