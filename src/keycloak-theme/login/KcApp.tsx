@@ -70,8 +70,9 @@ export default function KcApp(props: { kcContext: KcContext; }) {
 
     return (
         <Suspense>
-            <CssBaseline/>
             <ThemeWrapper>
+                <CssBaseline/>
+
                 <Box sx={{ height: "100%", width: "100%"}}>
                 {(() => {
                     switch (kcContext.pageId) {

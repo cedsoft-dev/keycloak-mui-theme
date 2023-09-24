@@ -50,7 +50,6 @@ export default function Template(props: TemplateProps<KcContext, I18n>) {
         "stylesCommon": [
             "lib/zocial/zocial.css"
         ],
-        "styles": ["css/login.css"],
         "htmlClassName": getClassName("kcHtmlClass"),
         "bodyClassName": undefined
     });
@@ -221,7 +220,7 @@ export default function Template(props: TemplateProps<KcContext, I18n>) {
     function renderContent() {
         return <Box>
             <Paper elevation={5} sx={isLargerMobile ? {mt: 3, mb: 3} : {}}>
-                <Grid container>
+                <Grid container style={{height: "100%"}}>
                     <Grid item md={4} xs={12} sx={{
                         background: `linear-gradient(115deg, ${theme.palette.primary.light}, ${theme.palette.primary.main})`,
                         p: 3,
@@ -257,7 +256,7 @@ export default function Template(props: TemplateProps<KcContext, I18n>) {
                     </Grid>
                 </Grid>
             </Paper>
-            <Typography sx={{pt: 2}}>{msg("loginTitleHtml", realm.displayNameHtml)}</Typography>
+            <Typography sx={{pt: 2, pb: 2}}>{msg("loginTitleHtml", realm.displayNameHtml)}</Typography>
 
         </Box>
     }
