@@ -11,11 +11,9 @@ function ThemeWrapper(props) {
     }
 
     return (
-        <ThemeProvider theme={baseTheme}>
             <ThemeProvider theme={theme}>
                 {props.children}
             </ThemeProvider>
-        </ThemeProvider>
     )
 }
 

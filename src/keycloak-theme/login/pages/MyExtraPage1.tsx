@@ -1,6 +1,6 @@
-import type { PageProps } from "keycloakify/login/pages/PageProps";
-import type { KcContext } from "../kcContext";
-import type { I18n } from "../i18n";
+import type {PageProps} from "keycloakify/login/pages/PageProps";
+import type {KcContext} from "../kcContext";
+import type {I18n} from "../i18n";
 
 export default function MyExtraPage1(props: PageProps<Extract<KcContext, { pageId: "my-extra-page-1.ftl"; }>, I18n>) {
 

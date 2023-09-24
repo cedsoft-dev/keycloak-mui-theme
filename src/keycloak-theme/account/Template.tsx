@@ -2,7 +2,6 @@
 
 import {usePrepareTemplate} from "keycloakify/lib/usePrepareTemplate";
 import {type TemplateProps} from "keycloakify/account/TemplateProps";
-import {useGetClassName} from "keycloakify/account/lib/useGetClassName";
 import type {KcContext} from "./kcContext";
 import type {I18n} from "./i18n";
 import {assert} from "keycloakify/tools/assert";
@@ -44,7 +43,6 @@ import {
 export default function Template(props: TemplateProps<KcContext, I18n>) {
     const {kcContext, i18n, doUseDefaultCss, active, classes, children} = props;
 
-    const {getClassName} = useGetClassName({doUseDefaultCss, classes});
 
     const {msg, changeLocale, labelBySupportedLanguageTag, currentLanguageTag} = i18n;
 

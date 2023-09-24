@@ -84,7 +84,7 @@ export default function LoginConfigTotp(props: PageProps<Extract<KcContext, {
                             <li>
                                 <Typography variant={"body1"}>{msg("loginTotpStep2")}</Typography>
                                 <img id="kc-totp-secret-qr-code" src={`data:image/png;base64, ${totp.totpSecretQrCode}`}
-                                     alt="Figure: Barcode"/>
+                                     alt="Figure: Barcode" style={{width: "100%", maxWidth: "20rem", height: "auto"}}/>
                                 <br/>
                                 <Typography variant={"body1"}>
                                     <Link href={totp.manualUrl} id="mode-manual">

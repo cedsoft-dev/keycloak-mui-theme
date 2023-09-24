@@ -18,7 +18,6 @@ import {
     useMediaQuery,
     useTheme
 } from "@mui/material";
-import config from "../../../../config";
 import {Language} from "@mui/icons-material";
 
 export default function Template(props: TemplateProps<KcContext, I18n>) {
@@ -50,7 +49,6 @@ export default function Template(props: TemplateProps<KcContext, I18n>) {
         "stylesCommon": [
             "lib/zocial/zocial.css"
         ],
-        "styles": ["css/login.css"],
         "htmlClassName": getClassName("kcHtmlClass"),
         "bodyClassName": undefined
     });
@@ -221,7 +219,7 @@ export default function Template(props: TemplateProps<KcContext, I18n>) {
     function renderContent() {
         return <Box>
             <Paper elevation={5} sx={isLargerMobile ? {mt: 3, mb: 3} : {}}>
-                <Grid container>
+                <Grid container style={{height: "100%"}}>
                     <Grid item md={4} xs={12} sx={{
                         background: `linear-gradient(115deg, ${theme.palette.primary.light}, ${theme.palette.primary.main})`,
                         p: 3,
@@ -237,7 +235,7 @@ export default function Template(props: TemplateProps<KcContext, I18n>) {
                             alignItems: "center"
                         }}>
                                 {/* @ts-ignore */ }
-                                <img src={theme.palette.primary.contrastLogo} style={{height: "auto", width: "15rem"}}/>
+                                <img src={theme.palette.primary.contrastLogo} style={{height: "auto", width: "12rem"}} alt={"Logo of company"}/>
                                 <Typography sx={{pt: 3, pb: 4, color: "primary.contrastText"}}>{msg("continueTo")} {renderClientName()}</Typography>
                         </Box>
                         <Box>
@@ -257,7 +255,7 @@ export default function Template(props: TemplateProps<KcContext, I18n>) {
                     </Grid>
                 </Grid>
             </Paper>
-            <Typography sx={{pt: 2}}>{msg("loginTitleHtml", realm.displayNameHtml)}</Typography>
+            <Typography sx={{pt: 2, pb: 2}}>{msg("loginTitleHtml", realm.displayNameHtml)}</Typography>
 
         </Box>
     }

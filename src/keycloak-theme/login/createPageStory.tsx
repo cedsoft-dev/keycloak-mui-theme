@@ -1,6 +1,6 @@
-import { getKcContext, type KcContext } from "./kcContext";
+import {getKcContext, type KcContext} from "./kcContext";
 import KcApp from "./KcApp";
-import type { DeepPartial } from "keycloakify/tools/DeepPartial";
+import type {DeepPartial} from "keycloakify/tools/DeepPartial";
 
 export function createPageStory<PageId extends KcContext["pageId"]>(params: {
     pageId: PageId;

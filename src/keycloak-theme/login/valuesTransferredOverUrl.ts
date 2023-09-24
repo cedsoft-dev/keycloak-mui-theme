@@ -1,10 +1,6 @@
-import { kcContext } from "./kcContext";
-import {
-    retrieveParamFromUrl,
-    addParamToUrl,
-    updateSearchBarUrl
-} from "powerhooks/tools/urlSearchParams";
-import { capitalize } from "tsafe/capitalize";
+import {kcContext} from "./kcContext";
+import {addParamToUrl, retrieveParamFromUrl, updateSearchBarUrl} from "powerhooks/tools/urlSearchParams";
+import {capitalize} from "tsafe/capitalize";
 
 export const { foo, addFooToQueryParams } = (() => {
     const queryParamName = "foo";

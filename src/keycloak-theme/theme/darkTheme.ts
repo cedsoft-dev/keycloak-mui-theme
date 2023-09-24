@@ -1,4 +1,4 @@
-import {createTheme, darken, lighten, ThemeOptions} from "@mui/material";
+import {createTheme, darken, lighten, responsiveFontSizes, ThemeOptions} from "@mui/material";
 import config from "../../config";
 import getLogo from "./getLogo";
 
@@ -50,4 +50,4 @@ const darkTheme = (theme: ThemeOptions | undefined) => createTheme({
         }
     }
 })
-export default darkTheme
+export default (theme: ThemeOptions | undefined) => responsiveFontSizes(darkTheme(theme))
