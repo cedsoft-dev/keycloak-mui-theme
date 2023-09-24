@@ -41,7 +41,7 @@ export default function LoginConfigTotp(props: PageProps<Extract<KcContext, {
                             </ul>
                         </li>
 
-                        {mode && mode == "manual" ? (
+                        {mode && mode === "manual" ? (
                             <>
                                 <li>
                                     <Typography variant={"body1"}>{msg("loginTotpManualStep2")}</Typography>

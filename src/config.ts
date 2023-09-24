@@ -1,7 +1,7 @@
 import CedSoftOSWhite from "./App/CedSoftOSWhite.png"
 import CedSoftOSBlack from "./App/CedSoftOSBlack.png"
 
-export default {
+const config = {
     palette: {
         primaryColor: "#1976d2",
         secondaryColor: "#e57373",
@@ -12,3 +12,5 @@ export default {
     },
     companyIcon: ""
 }
+
+export default config;

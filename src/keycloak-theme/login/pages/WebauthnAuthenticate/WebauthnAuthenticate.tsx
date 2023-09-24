@@ -23,7 +23,7 @@ export default function WebauthnAuthenticate(props: PageProps<Extract<KcContext,
 
     const { authenticators, challenge, shouldDisplayAuthenticators, userVerification, rpId } = kcContext;
     const createTimeout = Number(kcContext.createTimeout);
-    const isUserIdentified = kcContext.isUserIdentified == "true";
+    const isUserIdentified = kcContext.isUserIdentified === "true";
 
     const formElementRef = useRef<HTMLFormElement>(null);
 
@@ -76,7 +76,7 @@ export default function WebauthnAuthenticate(props: PageProps<Extract<KcContext,
 
         try {
             const result = await navigator.credentials.get({ publicKey });
-            if (!result || result.type != "public-key") {
+            if (!result || result.type !== "public-key") {
                 return;
             }
             assert(is<PublicKeyCredential>(result));

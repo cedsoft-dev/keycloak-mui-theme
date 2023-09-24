@@ -1,5 +1,4 @@
 import {createTheme} from "@mui/material";
-import config from "../../config";
 
 const baseTheme  = createTheme({
     breakpoints: {

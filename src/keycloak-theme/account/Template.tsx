@@ -41,7 +41,7 @@ import {
 } from "@mui/icons-material";
 
 export default function Template(props: TemplateProps<KcContext, I18n>) {
-    const {kcContext, i18n, doUseDefaultCss, active, classes, children} = props;
+    const {kcContext, i18n, doUseDefaultCss, active, children} = props;
 
 
     const {msg, changeLocale, labelBySupportedLanguageTag, currentLanguageTag} = i18n;

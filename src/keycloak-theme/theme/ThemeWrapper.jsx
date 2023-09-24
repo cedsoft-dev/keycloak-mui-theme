@@ -1,7 +1,6 @@
 import {ThemeProvider, useMediaQuery} from "@mui/material";
 import lightTheme from "./lightTheme";
 import darkTheme from "./darkTheme";
-import baseTheme from "./baseTheme";
 
 function ThemeWrapper(props) {
     const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
@@ -11,9 +10,9 @@ function ThemeWrapper(props) {
     }
 
     return (
-            <ThemeProvider theme={theme}>
-                {props.children}
-            </ThemeProvider>
+        <ThemeProvider theme={theme}>
+            {props.children}
+        </ThemeProvider>
     )
 }
 
