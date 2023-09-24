@@ -236,7 +236,7 @@ export default function Template(props: TemplateProps<KcContext, I18n>) {
                             alignItems: "center"
                         }}>
                                 {/* @ts-ignore */ }
-                                <img src={theme.palette.primary.contrastLogo} style={{height: "auto", width: "15rem"}}/>
+                                <img src={theme.palette.primary.contrastLogo} style={{height: "auto", width: "12rem"}} alt={"Logo of company"}/>
                                 <Typography sx={{pt: 3, pb: 4, color: "primary.contrastText"}}>{msg("continueTo")} {renderClientName()}</Typography>
                         </Box>
                         <Box>
