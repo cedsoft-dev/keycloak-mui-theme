@@ -22,7 +22,7 @@ import SelectAuthenticator from "./pages/SelectAuthenticator/SelectAuthenticator
 import UpdateEmail from "./pages/UpdateEmail/UpdateEmail";
 import UpdateUserProfile from "./pages/UpdateUserProfile/UpdateUserProfile";
 import WebauthnAuthenticate from "./pages/WebauthnAuthenticate/WebauthnAuthenticate";
-import {Box, CssBaseline, useTheme} from "@mui/material";
+import {Box, CssBaseline} from "@mui/material";
 import ThemeWrapper from "../theme/ThemeWrapper";
 
 const Template = lazy(() => import("./pages/Template/Template"));
@@ -53,7 +53,6 @@ export default function KcApp(props: { kcContext: KcContext; }) {
     const {kcContext} = props;
 
     const i18n = useI18n({kcContext});
-    const theme = useTheme();
 
     if (i18n === null) {
         //NOTE: Text resources for the current language are still being downloaded, we can't display anything yet.

@@ -48,7 +48,6 @@ export default function Login(props: PageProps<Extract<KcContext, { pageId: "log
     const {msg, msgStr} = i18n;
 
     const [isLoginButtonDisabled, setIsLoginButtonDisabled] = useState(false);
-    const [isLoggingIn, setIsLoggingIn] = useState(false);
 
     const onSubmit = useConstCallback<FormEventHandler<HTMLFormElement>>(e => {
         e.preventDefault();

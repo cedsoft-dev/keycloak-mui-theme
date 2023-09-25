@@ -1,4 +1,4 @@
-import { createGetKcContext } from "keycloakify/account";
+import {createGetKcContext} from "keycloakify/account";
 
 export type KcContextExtension =
 	| { pageId: "my-extra-page-1.ftl"; }

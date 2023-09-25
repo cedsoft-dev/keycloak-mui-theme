@@ -28,4 +28,6 @@ const lightTheme = (theme: ThemeOptions | undefined) => createTheme({
 
 })
 
-export default (theme: ThemeOptions | undefined) => responsiveFontSizes(lightTheme(theme));
+const theme = (theme: ThemeOptions | undefined) => responsiveFontSizes(lightTheme(theme));
+
+export default theme;

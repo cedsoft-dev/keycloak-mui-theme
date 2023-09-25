@@ -1,0 +1,99 @@
+stages:
+  - build
+  - release
+variables:
+  MAVEN_OPTS: "-Dmaven.repo.local=$CI_PROJECT_DIR/.m2/repository"
+  SECURE_LOG_LEVEL: debug
+  SAST_JAVA_VERSION: 17
+cache:
+  paths:
+    - ".m2/repository"
+
+keycloak-login-theme:
+  image: ${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/node:latest
+  stage: build
+  script:
+    - apt-get update
+    - apt-get install curl unzip openjdk-17-jdk maven -y
+    - npm i
+    - npm run build-keycloak-theme
+    - ls -al ./build_keycloak
+    - ls -al ./build_keycloak/target/
+  artifacts:
+    paths:
+      - ./build_keycloak/src/main/resources/theme/
+      - ./build_keycloak/target/*
+
+docker-package:
+  stage: build
+  image: docker:latest
+  needs:
+    - keycloak-login-theme
+  dependencies:
+    - keycloak-login-theme
+  services:
+    - docker:dind
+  script:
+    - |
+      ls -al
+      ls -al build_keycloak
+      ls -al build_keycloak/target
+      if [[ "${CI_SCRIPT_TRACE}" == "true" ]] || [[ -n "${CI_DEBUG_TRACE}" ]]; then
+        echo "Debugging enabled"
+        set -xv
+      fi    
+      docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
+      #Build date for opencontainers
+      BUILDDATE="'$(date '+%FT%T%z' | sed -E -n 's/(\+[0-9]{2})([0-9]{2})$/\1:\2/p')'" #rfc 3339 date
+      IMAGE_LABELS="$IMAGE_LABELS --label org.opencontainers.image.created=$BUILDDATE --label build-date=$BUILDDATE"
+      #Description for opencontainers
+      BUILDTITLE=$(echo $CI_PROJECT_TITLE | tr " " "_")
+      IMAGE_LABELS="$IMAGE_LABELS --label org.opencontainers.image.title=$BUILDTITLE --label org.opencontainers.image.description=$BUILDTITLE"
+      #Add ref.name for opencontainers
+      IMAGE_LABELS="$IMAGE_LABELS --label org.opencontainers.image.ref.name=$CI_REGISTRY_IMAGE:$(echo $CI_COMMIT_REF_NAME | tr / _)"
+
+      #Build Version Label and Tag from git tag, LastVersionTagInGit was placed by a previous job artifact
+      IMAGE_LABELS="$IMAGE_LABELS --label org.opencontainers.image.version=$GitVersion_LegacySemVer"
+      ADDITIONALTAGLIST="$ADDITIONALTAGLIST $GitVersion_LegacySemVer"
+      
+      ADDITIONALTAGLIST="$ADDITIONALTAGLIST $(echo $CI_COMMIT_REF_NAME | tr / _) $CI_COMMIT_SHORT_SHA"
+      if [[ "$CI_COMMIT_REF_NAME" == "main" ]]; then ADDITIONALTAGLIST="$ADDITIONALTAGLIST latest"; fi
+      if [[ -n "$ADDITIONALTAGLIST" ]]; then 
+        for TAG in $ADDITIONALTAGLIST; do 
+          FORMATTEDTAGLIST="${FORMATTEDTAGLIST} --tag $CI_REGISTRY_IMAGE:$TAG "; 
+        done; 
+      fi
+
+      echo $FORMATTEDTAGLIST
+      echo $IMAGE_LABELS
+
+      docker build $IMAGE_LABELS --pull $FORMATTEDTAGLIST -f Dockerfile .
+
+      if [[ $CI_COMMIT_REF_PROTECTED == "false" ]]; then
+        echo "To prevent clutter, containers are not pushed or download tested unless the branch is protected."
+      else
+        echo "Pushing container to registry."  
+
+        if [[ -n "$ADDITIONALTAGLIST" ]]; then 
+          for TAG in $ADDITIONALTAGLIST; do 
+            docker push "$CI_REGISTRY_IMAGE:$TAG"
+            echo "Image can be pulled with the reference: $CI_REGISTRY_IMAGE:$TAG"
+          done; 
+        fi
+      fi
+
+
+# Please see [Release CI/CD examples](https://docs.gitlab.com/ee/user/project/releases/release_cicd_examples.html) for many rich examples for triggering a release only on specific conditions.
+do_gitlab_release:
+  stage: release
+  image: registry.gitlab.com/gitlab-org/release-cli
+  rules:
+    - if: '$CI_COMMIT_BRANCH && $CI_COMMIT_REF_PROTECTED != "false"'
+      #This last rule will do a release for any protected branch. Literal branch names can be used if desired.
+
+  script:
+    - >
+      release-cli create --name ${GitVersion_LegacySemVer} --description $CI_COMMIT_REF_NAME-$CI_JOB_ID
+      --tag-name ${GitVersion_LegacySemVer} --ref $CI_COMMIT_SHA
+      --assets-link "{\"name\":\"Packaged Artifact\",\"url\":\"${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/packages/generic/${PACKAGENAME}/${GitVersion_LegacySemVer}/${PACKAGENAME}.${GitVersion_LegacySemVer}.tar.gz\"}"
+

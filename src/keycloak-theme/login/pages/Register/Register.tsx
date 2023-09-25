@@ -13,7 +13,7 @@ export default function Register(props: PageProps<Extract<KcContext, { pageId: "
         classes
     });
 
-    const {url, messagesPerField, register, realm, passwordRequired, recaptchaRequired, recaptchaSiteKey} = kcContext;
+    const {url, register, realm, passwordRequired, recaptchaRequired, recaptchaSiteKey} = kcContext;
 
     const {msg, msgStr} = i18n;
 
