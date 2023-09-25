@@ -17,8 +17,8 @@ keycloak-login-theme:
     - apt-get install curl unzip openjdk-17-jdk maven -y
     - npm i
     - npm run build-keycloak-theme
-    - ls -al /build_keycloak
-    - ls -al /build_keycloak/target/
+    - ls -al ./build_keycloak
+    - ls -al ./build_keycloak/target/
   artifacts:
     paths:
       - ./build_keycloak/src/main/resources/theme/
