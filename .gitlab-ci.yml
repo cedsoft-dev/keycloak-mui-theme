@@ -33,6 +33,9 @@ docker-package:
     - docker:dind
   script:
     - |
+      ls -al
+      ls -al build_keycloak
+      ls -al build_keycloak/target
       if [[ "${CI_SCRIPT_TRACE}" == "true" ]] || [[ -n "${CI_DEBUG_TRACE}" ]]; then
         echo "Debugging enabled"
         set -xv
