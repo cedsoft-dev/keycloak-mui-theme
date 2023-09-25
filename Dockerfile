@@ -10,7 +10,7 @@ ENV KC_DB=mariadb
 RUN ls -al /opt/keycloak/providers
 # Install custom providers
 
-COPY ./build_keycloak/target/keycloakify-starter-keycloak-theme-*.jar /opt/keycloak/providers/keycloak-mui-theme.jar
+COPY build_keycloak/target/keycloak-mui-theme-keycloak-theme-*.jar /opt/keycloak/providers/keycloak-mui-theme.jar
 RUN ls -al /opt/keycloak/providers
 
 WORKDIR /opt/keycloak
