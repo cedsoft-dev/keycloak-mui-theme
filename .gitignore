@@ -1,1 +1,3 @@
 /.idea/
+build_keycloak/
+node_modules
