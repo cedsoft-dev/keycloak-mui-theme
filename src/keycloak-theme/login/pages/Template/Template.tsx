@@ -126,10 +126,18 @@ export default function Template(props: TemplateProps<KcContext, I18n>) {
     }
 
     function renderClientName() {
-        if (kcContext?.client?.name) {
-            return kcContext?.client?.name
+        if (kcContext?.client?.name || kcContext?.client?.clientId) {
+            let content;
+            if (kcContext?.client?.name) {
+                content = kcContext?.client?.name
+            }
+            if (kcContext?.client?.clientId) {
+                content = kcContext?.client?.clientId;
+            }
+            return <Typography
+                sx={{pt: 3, pb: 4, color: "primary.contrastText"}}>{msg("continueTo")} {content}</Typography>
         }
-        return kcContext?.client?.clientId;
+        return null;
     }
 
     function renderMessage() {
@@ -193,7 +201,8 @@ export default function Template(props: TemplateProps<KcContext, I18n>) {
         if (realm.internationalizationEnabled && (assert(locale !== undefined), true) && locale.supported.length > 1) {
             return (
                 <div style={{display: "flex", alignItems: "center"}}>
-                    <Language fontSize={"large"} style={{paddingRight: "1rem", color: theme.palette.primary.contrastText}}/>
+                    <Language fontSize={"large"}
+                              style={{paddingRight: "1rem", color: theme.palette.primary.contrastText}}/>
                     <Select
                         value={currentLanguageTag}
                         onChange={(kcTag) => {
@@ -233,9 +242,10 @@ export default function Template(props: TemplateProps<KcContext, I18n>) {
                             flexDirection: "column",
                             alignItems: "center"
                         }}>
-                                {/* @ts-ignore */ }
-                                <img src={theme.palette.primary.contrastLogo} style={{height: "auto", width: "12rem"}} alt={"Logo of company"}/>
-                                <Typography sx={{pt: 3, pb: 4, color: "primary.contrastText"}}>{msg("continueTo")} {renderClientName()}</Typography>
+                            {/* @ts-ignore */}
+                            <img src={theme.palette.primary.contrastLogo} style={{height: "auto", width: "12rem"}}
+                                 alt={"Logo of company"}/>
+                            {renderClientName()}
                         </Box>
                         <Box>
                             {renderLocalization()}
