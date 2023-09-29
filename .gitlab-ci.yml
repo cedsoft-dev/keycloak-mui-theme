@@ -1,10 +1,55 @@
+variables:
+  CI_DEBUG_TRACE:
+    value: ''
+    description: "Verbose output of all of GitLab's output, including git cloning information. More info: https://docs.gitlab.com/ee/ci/variables/#enable-debug-logging"
+  CI_SCRIPT_TRACE:
+    value: 'false'
+    description: "Verbose output of CI script."
+  CI_GITVERSION_TRACE:
+    value: 'true'
+    description: "Gitversion config emited and verbosity set. Default to true in the Guided Exploration for learning purposes."
+  SECURE_LOG_LEVEL:
+    value: ''
+    description: "Set to one of: 'fatal,warn,error,info,debug' More info: https://docs.gitlab.com/ee/user/application_security/sast/#logging-level"
+  TRACE:
+    value: ''
+    description: "Set to 1 to output helm trace commands. More Info: https://docs.gitlab.com/ee/topics/autodevops/customize.html#cicd-variables"
+  PACKAGENAME: $CI_PROJECT_NAME
+
+  #https://docs.gitlab.com/ee/topics/git/useful_git_commands.html#debugging-with-git-embedded-traces
+  GIT_CURL_VERBOSE:
+    value: ''
+    description: 'Set to 1 to enable tracing of git https operations. More info: https://docs.gitlab.com/ee/topics/git/useful_git_commands.html#debugging-with-git-embedded-traces'
+  GIT_TRACE_PERFORMANCE:
+    value: ''
+    description: 'Set to 1 to enable tracing of performance data, showing how long each particular git invocation takes More info: https://docs.gitlab.com/ee/topics/git/useful_git_commands.html#debugging-with-git-embedded-traces'
+  GIT_TRACE_SETUP:
+    value: ''
+    description: 'Set to 1 to enable tracing of what git is discovering about the repository and environment it’s interacting with. More info: https://docs.gitlab.com/ee/topics/git/useful_git_commands.html#debugging-with-git-embedded-traces'
+  GIT_TRACE_PACKET:
+    value: ''
+    description: 'Set to 1 to enable tracing packet-level tracing for network operations. More info: https://docs.gitlab.com/ee/topics/git/useful_git_commands.html#debugging-with-git-embedded-traces'
+  MAVEN_OPTS: "-Dmaven.repo.local=$CI_PROJECT_DIR/.m2/repository"
+  SAST_JAVA_VERSION: 17
+
 stages:
+  - .pre
   - build
   - release
-variables:
-  MAVEN_OPTS: "-Dmaven.repo.local=$CI_PROJECT_DIR/.m2/repository"
-  SECURE_LOG_LEVEL: debug
-  SAST_JAVA_VERSION: 17
+
+workflow:
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_TAG'
+      when: never
+    - if: $CI_COMMIT_BRANCH
+      when: always
+
+include:
+  - local: '/gitversion-ci-cd-plugin-extension.gitlab-ci.yml'
+
+determineversion:
+  extends: .gitversion_function
+
 cache:
   paths:
     - ".m2/repository"

@@ -46,7 +46,7 @@ export default function Template(props: TemplateProps<KcContext, I18n>) {
 
     const {msg, changeLocale, labelBySupportedLanguageTag, currentLanguageTag} = i18n;
 
-    const {locale, url, features, realm, message, referrer} = kcContext;
+    const { locale, url, features, realm, message, referrer} = kcContext;
     const [mobileOpen, setMobileOpen] = React.useState(false);
 
     const theme = useTheme();
@@ -57,8 +57,6 @@ export default function Template(props: TemplateProps<KcContext, I18n>) {
     const {isReady} = usePrepareTemplate({
         bodyClassName: undefined,
         "doFetchDefaultThemeResources": doUseDefaultCss,
-        url,
-        "styles": ["css/account.css"],
         "htmlClassName": undefined
     });
     const drawerWidth = 240;
@@ -109,7 +107,7 @@ export default function Template(props: TemplateProps<KcContext, I18n>) {
         <div>
             <Toolbar>
                 <Typography variant="h6" noWrap component="div">
-                    Cedsoft Accounts
+                    Accounts
                 </Typography>
             </Toolbar>
             <Divider/>

@@ -5,10 +5,23 @@ function LoadingClickButton(props: any) {
 
     const [isLoading, setIsLoading] = useState(false);
 
-    return(
-        <LoadingButton {...props} loading={(props.loading || isLoading)} onClick={() => {
-            setIsLoading(true);
-            props.onClick();
+    console.log({...{
+            ...props,
+            loading: (props.loading || isLoading),
+            onClick: () => {
+                setIsLoading(true);
+                props.onClick();
+            }
+        }})
+
+    return (
+        <LoadingButton {...{
+            loading: (props.loading || isLoading),
+            onClick: () => {
+                setIsLoading(true);
+                props.onClick();
+            },
+            ...props,
         }}>
 
         </LoadingButton>
@@ -16,7 +29,8 @@ function LoadingClickButton(props: any) {
 
 }
 
-LoadingClickButton.defaultProps= {
-    onClick: () => {}
+LoadingClickButton.defaultProps = {
+    onClick: () => {
+    }
 }
 export default LoadingClickButton;

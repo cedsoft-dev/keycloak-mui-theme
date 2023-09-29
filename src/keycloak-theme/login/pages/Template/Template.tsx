@@ -45,9 +45,8 @@ export default function Template(props: TemplateProps<KcContext, I18n>) {
 
     const {isReady} = usePrepareTemplate({
         "doFetchDefaultThemeResources": doUseDefaultCss,
-        url,
-        "stylesCommon": [
-            "lib/zocial/zocial.css"
+        styles: [
+            `${url.resourcesCommonPath}/lib/zocial/zocial.css`
         ],
         "htmlClassName": getClassName("kcHtmlClass"),
         "bodyClassName": undefined
@@ -128,9 +127,9 @@ export default function Template(props: TemplateProps<KcContext, I18n>) {
 
     function renderClientName() {
         if (kcContext?.client?.name) {
-            return kcContext?.client.name
+            return kcContext?.client?.name
         }
-        return kcContext?.client.clientId;
+        return kcContext?.client?.clientId;
     }
 
     function renderMessage() {
