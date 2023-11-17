@@ -2,6 +2,7 @@ import {createTheme, darken, lighten, responsiveFontSizes, ThemeOptions} from "@
 import config from "../../config";
 import invertColor from "./InvertColor";
 import getLogo from "./getLogo";
+import ComponentsTheme from "./conponentsTheme";
 
 const lightTheme = (theme: ThemeOptions | undefined) => createTheme({
     ...theme,
@@ -25,6 +26,7 @@ const lightTheme = (theme: ThemeOptions | undefined) => createTheme({
             contrastLogo: getLogo(config.palette.secondaryColor),
         }
     },
+    components: ComponentsTheme
 
 })
 

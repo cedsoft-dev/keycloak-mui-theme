@@ -57,8 +57,9 @@ export default function Template(props: TemplateProps<KcContext, I18n>) {
     const {isReady} = usePrepareTemplate({
         bodyClassName: undefined,
         "doFetchDefaultThemeResources": doUseDefaultCss,
-        url,
-        "styles": ["css/account.css"],
+        "styles": [
+            `${url.resourcesPath}/css/account.css`
+        ],
         "htmlClassName": undefined
     });
     const drawerWidth = 240;
@@ -212,9 +213,9 @@ export default function Template(props: TemplateProps<KcContext, I18n>) {
                                 value={currentLanguageTag}
                                 sx={{
                                     position: 'relative',
-                                    backgroundColor: alpha(theme.palette.common.white, 0.15),
+                                    backgroundColor: alpha(theme.palette.primary.contrastText, 0.15),
                                     '&:hover': {
-                                        backgroundColor: alpha(theme.palette.common.white, 0.25),
+                                        backgroundColor: alpha(theme.palette.primary.contrastText, 0.25),
                                     },
                                     marginLeft: 0,
                                     width: '100%',
