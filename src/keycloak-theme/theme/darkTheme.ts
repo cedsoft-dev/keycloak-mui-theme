@@ -1,6 +1,7 @@
 import {createTheme, darken, responsiveFontSizes, ThemeOptions} from "@mui/material";
 import config from "../../config";
 import getLogo from "./getLogo";
+import ComponentsTheme from "./conponentsTheme";
 
 const darkTheme = (theme: ThemeOptions | undefined) => createTheme({
     ...theme,
@@ -42,13 +43,7 @@ const darkTheme = (theme: ThemeOptions | undefined) => createTheme({
         },
         divider: "rgba(255, 255, 255, 0.12)"
     },
-    components: {
-        MuiButton: {
-            defaultProps: {
-                color: "inherit"
-            }
-        }
-    }
+    components: ComponentsTheme
 })
 const theme = (theme: ThemeOptions | undefined) => responsiveFontSizes(darkTheme(theme))
 

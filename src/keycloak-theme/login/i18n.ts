@@ -15,7 +15,8 @@ export const { useI18n } = createUseI18n({
         backToApplication: "Back to Application",
         or: "Or",
         backToLogin: "Back to Login",
-        continueTo: "Continue to"
+        continueTo: "Continue to",
+        locale: "Language"
     },
     de: {
         /* spell-checker: disable */
@@ -26,7 +27,8 @@ export const { useI18n } = createUseI18n({
         backToApplication: "Zurück zur App",
         or: "Oder",
         backToLogin: "Zurück zum Login",
-        continueTo: "Weiter zu"
+        continueTo: "Weiter zu",
+        locale: "Sprache"
 
         /* spell-checker: enable */
     }
