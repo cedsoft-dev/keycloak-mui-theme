@@ -55,8 +55,11 @@ export default function Template(props: TemplateProps<KcContext, I18n>) {
         setMobileOpen(!mobileOpen);
     };
     const {isReady} = usePrepareTemplate({
-        bodyClassName: undefined,
+        "bodyClassName": undefined,
         "doFetchDefaultThemeResources": doUseDefaultCss,
+        "styles": [
+            `${url.resourcesPath}/css/account.css`
+        ],
         "htmlClassName": undefined
     });
     const drawerWidth = 240;
@@ -65,43 +68,6 @@ export default function Template(props: TemplateProps<KcContext, I18n>) {
     if (!isReady) {
         return null;
     }
-
-    /*
-    <ul>
-                        <li className={clsx(active === "account" && "active")}>
-                            <a href={url.accountUrl}>{msg("account")}</a>
-                        </li>
-                        {features.passwordUpdateSupported && (
-                            <li className={clsx(active === "password" && "active")}>
-                                <a href={url.passwordUrl}>{msg("password")}</a>
-                            </li>
-                        )}
-                        <li className={clsx(active === "totp" && "active")}>
-                            <a href={url.totpUrl}>{msg("authenticator")}</a>
-                        </li>
-                        {features.identityFederation && (
-                            <li className={clsx(active === "social" && "active")}>
-                                <a href={url.socialUrl}>{msg("federatedIdentity")}</a>
-                            </li>
-                        )}
-                        <li className={clsx(active === "sessions" && "active")}>
-                            <a href={url.sessionsUrl}>{msg("sessions")}</a>
-                        </li>
-                        <li className={clsx(active === "applications" && "active")}>
-                            <a href={url.applicationsUrl}>{msg("applications")}</a>
-                        </li>
-                        {features.log && (
-                            <li className={clsx(active === "log" && "active")}>
-                                <a href={url.logUrl}>{msg("log")}</a>
-                            </li>
-                        )}
-                        {realm.userManagedAccessAllowed && features.authorization && (
-                            <li className={clsx(active === "authorization" && "active")}>
-                                <a href={url.resourceUrl}>{msg("myResources")}</a>
-                            </li>
-                        )}
-                    </ul>
-     */
 
     const drawer = (
         <div>
@@ -210,9 +176,9 @@ export default function Template(props: TemplateProps<KcContext, I18n>) {
                                 value={currentLanguageTag}
                                 sx={{
                                     position: 'relative',
-                                    backgroundColor: alpha(theme.palette.common.white, 0.15),
+                                    backgroundColor: alpha(theme.palette.primary.contrastText, 0.15),
                                     '&:hover': {
-                                        backgroundColor: alpha(theme.palette.common.white, 0.25),
+                                        backgroundColor: alpha(theme.palette.primary.contrastText, 0.25),
                                     },
                                     marginLeft: 0,
                                     width: '100%',
