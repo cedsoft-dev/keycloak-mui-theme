@@ -47,7 +47,7 @@ export default function Template(props: TemplateProps<KcContext, I18n>) {
 
     const {isReady} = usePrepareTemplate({
         "doFetchDefaultThemeResources": doUseDefaultCss,
-        styles: [
+        "styles": [
             `${url.resourcesCommonPath}/lib/zocial/zocial.css`,
         ],
         "htmlClassName": getClassName("kcHtmlClass"),
