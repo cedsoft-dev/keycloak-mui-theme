@@ -9,7 +9,9 @@ import {
     Alert,
     Box,
     Container,
+    FormControl,
     Grid,
+    InputLabel,
     MenuItem,
     Paper,
     Select,
@@ -45,9 +47,8 @@ export default function Template(props: TemplateProps<KcContext, I18n>) {
 
     const {isReady} = usePrepareTemplate({
         "doFetchDefaultThemeResources": doUseDefaultCss,
-        url,
-        "stylesCommon": [
-            "lib/zocial/zocial.css"
+        "styles": [
+            `${url.resourcesCommonPath}/lib/zocial/zocial.css`,
         ],
         "htmlClassName": getClassName("kcHtmlClass"),
         "bodyClassName": undefined
@@ -193,24 +194,45 @@ export default function Template(props: TemplateProps<KcContext, I18n>) {
     function renderLocalization() {
         if (realm.internationalizationEnabled && (assert(locale !== undefined), true) && locale.supported.length > 1) {
             return (
-                <div style={{display: "flex", alignItems: "center"}}>
-                    <Language fontSize={"large"} style={{paddingRight: "1rem", color: theme.palette.primary.contrastText}}/>
-                    <Select
-                        value={currentLanguageTag}
-                        onChange={(kcTag) => {
-                            changeLocale(kcTag.target.value)
-                        }}
-                        label="Language"
-                        fullWidth
-                        size={"small"}
-                    >
-                        {locale.supported.map(({languageTag}) => (
-                            <MenuItem value={languageTag} key={languageTag}>
-                                {labelBySupportedLanguageTag[languageTag]}
-                            </MenuItem>
-                        ))}
-                    </Select>
-                </div>
+                <Box sx={{
+                    display: "flex", alignItems: "center"
+                }}>
+                    <Language fontSize={"large"}
+                              style={{paddingRight: "1rem", color: theme.palette.primary.contrastText}}/>
+                    <FormControl fullWidth>
+                        <InputLabel id="language-select-label"
+                                    sx={{color: theme.palette.primary.contrastText, opacity: ".65"}}
+                                    color={"secondary"}>{msg("locale")}</InputLabel>
+
+                        <Select
+                            value={currentLanguageTag}
+                            onChange={(kcTag) => {
+                                changeLocale(kcTag.target.value)
+                            }}
+                            label={msg("locale")}
+                            labelId={"language-select-label"}
+                            fullWidth
+                            size={"small"}
+                            sx={{
+                                color: theme.palette.primary.contrastText,
+                                borderColor: theme.palette.primary.contrastText,
+                                '.MuiOutlinedInput-notchedOutline': {
+                                    borderColor: theme.palette.primary.contrastText,
+                                },
+                                '.MuiSvgIcon-root ': {
+                                    fill: theme.palette.primary.contrastText + " !important",
+                                }
+                            }
+                            }
+                        >
+                            {locale.supported.map(({languageTag}) => (
+                                <MenuItem value={languageTag} key={languageTag}>
+                                    {labelBySupportedLanguageTag[languageTag]}
+                                </MenuItem>
+                            ))}
+                        </Select>
+                    </FormControl>
+                </Box>
             )
         }
     }
@@ -234,9 +256,14 @@ export default function Template(props: TemplateProps<KcContext, I18n>) {
                             flexDirection: "column",
                             alignItems: "center"
                         }}>
-                                {/* @ts-ignore */ }
-                                <img src={theme.palette.primary.contrastLogo} style={{height: "auto", width: "12rem"}} alt={"Logo of company"}/>
-                                <Typography sx={{pt: 3, pb: 4, color: "primary.contrastText"}}>{msg("continueTo")} {renderClientName()}</Typography>
+                            {/* @ts-ignore */}
+                            <img src={theme.palette.primary.contrastLogo} style={{height: "auto", width: "12rem"}}
+                                 alt={"Logo of company"}/>
+                            <Typography sx={{
+                                pt: 3,
+                                pb: 4,
+                                color: "primary.contrastText"
+                            }}>{msg("continueTo")} {renderClientName()}</Typography>
                         </Box>
                         <Box>
                             {renderLocalization()}
