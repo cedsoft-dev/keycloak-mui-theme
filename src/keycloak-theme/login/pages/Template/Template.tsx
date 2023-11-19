@@ -130,11 +130,11 @@ export default function Template(props: TemplateProps<KcContext, I18n>) {
     function renderClientName() {
         if (kcContext?.client?.name || kcContext?.client?.clientId) {
             let content;
-            if (kcContext?.client?.name) {
-                content = kcContext?.client?.name
-            }
             if (kcContext?.client?.clientId) {
                 content = kcContext?.client?.clientId;
+            }
+            if (kcContext?.client?.name) {
+                content = kcContext?.client?.name
             }
             return <Typography
                 sx={{pt: 3, pb: 4, color: "primary.contrastText"}}>{msg("continueTo")} {content}</Typography>
