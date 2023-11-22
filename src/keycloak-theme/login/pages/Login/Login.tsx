@@ -159,7 +159,7 @@ export default function Login(props: PageProps<Extract<KcContext, { pageId: "log
                                     autoComplete={"off"}
                                     fullWidth
                                 />
-                                <Grid container alignItems={"center"} >
+                                <Grid container alignItems={"center"}>
                                     <Grid item xs={12} sm={12} md={6}>
                                         {realm.rememberMe && !usernameHidden && (
                                             <div className="checkbox">
@@ -173,9 +173,11 @@ export default function Login(props: PageProps<Extract<KcContext, { pageId: "log
                                             </div>
                                         )}
                                     </Grid>
-                                    <Grid item xs={12} sm={12} md={6} style={{display: "flex", justifyContent: "flex-end"}}>
+                                    <Grid item xs={12} sm={12} md={6}
+                                          style={{display: "flex", justifyContent: "flex-end"}}>
                                         {realm.resetPasswordAllowed && (
-                                            <Button tabIndex={5} href={url.loginResetCredentialsUrl} fullWidth={!isLargerMobile}>
+                                            <Button tabIndex={5} href={url.loginResetCredentialsUrl}
+                                                    fullWidth={!isLargerMobile}>
                                                 {msg("doForgotPassword")}
                                             </Button>
                                         )}
@@ -212,7 +214,7 @@ export default function Login(props: PageProps<Extract<KcContext, { pageId: "log
                 {realm.password && social.providers !== undefined && (
                     <List>
                         {social.providers.map(p => (
-                            <ListItemButton>
+                            <ListItemButton href={p.loginUrl}>
                                 <ListItemIcon>{getSocialProviderIcon(p.providerId)}</ListItemIcon>
                                 <ListItemText primary={p.displayName}/>
                             </ListItemButton>

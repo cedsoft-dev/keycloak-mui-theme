@@ -10265,10 +10265,10 @@ keycloak-js@^21.0.1:
     base64-js "^1.5.1"
     js-sha256 "^0.9.0"
 
-keycloakify@^8.1.1:
-  version "8.1.1"
-  resolved "https://registry.npmjs.org/keycloakify/-/keycloakify-8.1.1.tgz"
-  integrity sha512-k4XWFqMZnVlv0lmsPQCHiM4qJvGIu+RyuCAJCtSYZWGKPvqzp+1sibk3WszCrC5xQ1slGhuDONkSIQvZ5qgMlw==
+keycloakify@^8.3.3:
+  version "8.4.0"
+  resolved "https://registry.npmjs.org/keycloakify/-/keycloakify-8.4.0.tgz"
+  integrity sha512-mZ6HXRZkkhFdQvK/mMMTDwrJ3cBzS85skcs/r3xvYT+P06EoLVfG8KBQuyy9IOdke+0ZHjylDV4E4UvWVCqPGw==
   dependencies:
     "@babel/generator" "^7.22.9"
     "@babel/parser" "^7.22.7"

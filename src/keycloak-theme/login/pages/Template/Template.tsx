@@ -21,6 +21,7 @@ import {
     useTheme
 } from "@mui/material";
 import {Language} from "@mui/icons-material";
+import config from "../../../../config";
 
 export default function Template(props: TemplateProps<KcContext, I18n>) {
     const {
@@ -128,7 +129,7 @@ export default function Template(props: TemplateProps<KcContext, I18n>) {
     }
 
     function renderClientName() {
-        if (kcContext?.client?.name || kcContext?.client?.clientId) {
+        if (!config.disableContinue && (kcContext?.client?.name || kcContext?.client?.clientId)) {
             let content;
             if (kcContext?.client?.clientId) {
                 content = kcContext?.client?.clientId;
@@ -137,7 +138,7 @@ export default function Template(props: TemplateProps<KcContext, I18n>) {
                 content = kcContext?.client?.name
             }
             return <Typography
-                sx={{pt: 3, pb: 4, color: "primary.contrastText"}}>{msg("continueTo")} {content}</Typography>
+                sx={{color: "primary.contrastText"}}>{msg("continueTo")} {content}</Typography>
         }
         return null;
     }
@@ -267,7 +268,9 @@ export default function Template(props: TemplateProps<KcContext, I18n>) {
                             {/* @ts-ignore */}
                             <img src={theme.palette.primary.contrastLogo} style={{height: "auto", width: "12rem"}}
                                  alt={"Logo of company"}/>
-                            {renderClientName()}
+                            <Box sx={{pt: 3, pb: 4}}>
+                                {renderClientName()}
+                            </Box>
                         </Box>
                         <Box>
                             {renderLocalization()}

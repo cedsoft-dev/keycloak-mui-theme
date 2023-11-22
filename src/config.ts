@@ -10,7 +10,7 @@ const config = {
         light: CedSoftOSWhite,
         dark: CedSoftOSBlack
     },
-    companyIcon: ""
+    disableContinue: false,
 }
 
 export default config;
