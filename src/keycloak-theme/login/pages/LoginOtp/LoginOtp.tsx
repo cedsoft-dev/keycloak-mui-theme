@@ -49,52 +49,52 @@ export default function LoginOtp(props: PageProps<Extract<KcContext, { pageId: "
         <Template {...{kcContext, i18n, doUseDefaultCss, classes}} headerNode={msg("doLogIn")}>
             <form id="kc-otp-login-form" className={getClassName("kcFormClass")} action={url.loginAction} method="post">
                 <Stack spacing={2}>
-                {otpLogin.userOtpCredentials.length > 1 && (
-                    <ToggleButtonGroup
-                        fullWidth
-                        color="primary"
-                        value={otpState}
-                        exclusive
-                        onChange={(event, newValue) => {
-                            if (newValue === otpState) {
-                                return null;
-                            }
-                            setOtpState(newValue)
-                        }}
-                        aria-label="Platform"
-                    >
-                        {otpLogin.userOtpCredentials.map(otpCredential => (
-                            <ToggleButton key={otpCredential.id}
-                                          value={otpCredential.id}>{otpCredential.userLabel}</ToggleButton>
-                        ))}
-                    </ToggleButtonGroup>
-
-                )}
-                <input type="hidden" value={otpState ?? ""} name={"selectedCredentialId"}/>
-
-                <div className={getClassName("kcFormGroupClass")}>
-                    <TextField fullWidth name={"otp"} autoComplete={"off"} type="text" autoFocus
-                               label={msg("loginOtpOneTime")}/>
-                </div>
-
-                <div className={getClassName("kcFormGroupClass")}>
-                    <div id="kc-form-options" className={getClassName("kcFormOptionsClass")}>
-                        <div className={getClassName("kcFormOptionsWrapperClass")}/>
-                    </div>
-
-                    <div id="kc-form-buttons" className={getClassName("kcFormButtonsClass")}>
-                        <LoadingClickButton
+                    {otpLogin.userOtpCredentials.length > 1 && (
+                        <ToggleButtonGroup
                             fullWidth
-                            name="login"
-                            id="kc-login"
-                            type="submit"
-                            value={msgStr("doLogIn")}
-                            variant={"contained"}
-                            color={"secondary"}
-                            disabled={!otpState}
-                        >{msgStr("doLogIn")}</LoadingClickButton>
+                            color="primary"
+                            value={otpState}
+                            exclusive
+                            onChange={(event, newValue) => {
+                                if (newValue === otpState) {
+                                    return null;
+                                }
+                                setOtpState(newValue)
+                            }}
+                            aria-label="Platform"
+                        >
+                            {otpLogin.userOtpCredentials.map(otpCredential => (
+                                <ToggleButton key={otpCredential.id}
+                                              value={otpCredential.id}>{otpCredential.userLabel}</ToggleButton>
+                            ))}
+                        </ToggleButtonGroup>
+
+                    )}
+                    <input type="hidden" value={otpState ?? ""} name={"selectedCredentialId"}/>
+
+                    <div className={getClassName("kcFormGroupClass")}>
+                        <TextField fullWidth name={"otp"} autoComplete={"off"} type="text" autoFocus
+                                   label={msg("loginOtpOneTime")}/>
                     </div>
-                </div>
+
+                    <div className={getClassName("kcFormGroupClass")}>
+                        <div id="kc-form-options" className={getClassName("kcFormOptionsClass")}>
+                            <div className={getClassName("kcFormOptionsWrapperClass")}/>
+                        </div>
+
+                        <div id="kc-form-buttons" className={getClassName("kcFormButtonsClass")}>
+                            <LoadingClickButton
+                                fullWidth
+                                name="login"
+                                id="kc-login"
+                                type="submit"
+                                value={msgStr("doLogIn")}
+                                variant={"contained"}
+                                color={"secondary"}
+                                disabled={!otpState && otpLogin.userOtpCredentials.length > 1}
+                            >{msgStr("doLogIn")}</LoadingClickButton>
+                        </div>
+                    </div>
                 </Stack>
             </form>
         </Template>
